@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useRouter } from "next/navigation";
 import {
   BookOpenCheck,
   Building2,
@@ -25,6 +26,7 @@ import {
   HFlow,
   HStep,
 } from "@/components/docs-flow";
+import { DocsV11Overview, DocsV11LeadFlow, DocsV11Incorporation, DocsV11Screening, DocsV11Onboarding, DocsV11Contracts, DocsV11LeadReport, DocsV11RecordModel, DocsV11OpenNotes } from "@/components/docs-v11-flows";
 import DocsMonthlyFlow from "@/components/docs-monthly-flow";
 import DocsFyeAlerts from "@/components/docs-fye-alerts";
 import DocsCommunicationFlow from "@/components/docs-communication-flow";
@@ -117,7 +119,8 @@ function readSavedTheme(): DocsTheme {
   }
 }
 
-export default function DocsView() {
+export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" }) {
+  const router = useRouter();
   const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
   const [selectedLang, setLang] = useState<DocsLang | null>(null);
   const lang = selectedLang ?? (hydrated ? readSavedLanguage() : "id");
@@ -145,6 +148,21 @@ export default function DocsView() {
   };
 
   const isId = lang === "id";
+  const sections = useMemo(() => {
+    if (version === "1.0") return navSections[lang];
+    return navSections[lang].flatMap(section => {
+      if (section.id === "incorporation") return [section, { id: "identity-screening", label: isId ? "Identitas & screening" : "Identity & Screening" }];
+      if (section.id === "onboarding") return [section, { id: "service-contracts", label: isId ? "Layanan & kontrak" : "Services & Contracts" }];
+      return [section];
+    });
+  }, [lang, isId, version]);
+
+  const handleSetVersion = (next: string) => {
+    if (next !== "1.0" && next !== "1.1") return;
+    const hash = window.location.hash;
+    const sharedAnchor = navSections.id.some(section => hash === `#${section.id}` || hash === `#h-${section.id}`) || hash.startsWith("#glossary-");
+    router.push(`/docs/v${next}${window.location.search}${sharedAnchor ? hash : "#overview"}`);
+  };
   const [activeSection, setActiveSection] = useState("overview");
 
   useEffect(() => {
@@ -165,19 +183,28 @@ export default function DocsView() {
       const current = entries.find(entry => entry.isIntersecting);
       if (current) setActiveSection(current.target.id);
     }, { rootMargin: "-8% 0px -75% 0px" });
-    for (const section of navSections.id) {
+    for (const section of sections) {
       const element = document.getElementById(section.id);
       if (element) observer.observe(element);
     }
     return () => observer.disconnect();
-  }, []);
+  }, [sections]);
 
   return (
     <div className="docs-shell" data-theme={theme}>
       <header className="docs-topbar" aria-label={isId ? "Header panduan" : "Handbook header"}>
         <div className="docs-topbar-inner">
-          <a className="docs-header-brand" href="#overview"><BookOpenCheck size={24} aria-hidden="true" /><span>CRM Handbook<small>SOAS Pte. Ltd.</small></span></a>
-          <DocsGlobalSearch key={lang} lang={lang} />
+          <div className="docs-header-identity">
+            <a className="docs-header-brand" href="#overview"><BookOpenCheck size={24} aria-hidden="true" /><span>CRM Handbook<small>SOAS Pte. Ltd.</small></span></a>
+            <label className="docs-version-control">
+              <span className="sr-only">{isId ? "Versi panduan" : "Handbook version"}</span>
+              <select aria-label={isId ? "Versi panduan" : "Handbook version"} value={version} onChange={event => handleSetVersion(event.target.value)}>
+                <option value="1.1">v1.1 · {isId ? "Terbaru" : "Latest"}</option>
+                <option value="1.0">v1.0 · {isId ? "Arsip" : "Archive"}</option>
+              </select>
+            </label>
+          </div>
+          <DocsGlobalSearch key={`${version}-${lang}`} lang={lang} />
           <div className="docs-header-actions">
             <button type="button" className="docs-theme-toggle" onClick={handleToggleTheme} aria-pressed={isDark} aria-label={isId ? (isDark ? "Gunakan mode terang" : "Gunakan mode gelap") : (isDark ? "Switch to light mode" : "Switch to dark mode")}>
               {isDark ? <Sun size={17} aria-hidden="true" /> : <Moon size={17} aria-hidden="true" />}
@@ -214,11 +241,12 @@ export default function DocsView() {
       <aside className="docs-sidebar">
         <nav className="docs-toc" aria-label={isId ? "Daftar isi" : "Table of contents"}>
           <p className="docs-toc-label">{isId ? "DAFTAR ISI" : "ON THIS PAGE"}</p>
-          {navSections[lang].map((section, index) => <a key={section.id} href={`#${section.id}`} onClick={() => setActiveSection(section.id)} aria-current={activeSection === section.id ? "location" : undefined}><span className="docs-toc-number">{String(index + 1).padStart(2, "0")}</span>{section.label}</a>)}
+          {sections.map((section, index) => <a key={section.id} href={`#${section.id}`} onClick={() => setActiveSection(section.id)} aria-current={activeSection === section.id ? "location" : undefined}><span className="docs-toc-number">{String(index + 1).padStart(2, "0")}</span>{section.label}</a>)}
         </nav>
         <div className="docs-sidebar-footer"><span>ACRA · IRAS · SOAS</span><small>{isId ? "Rujukan diperiksa 10 Nov 2026" : "Sources checked 10 Nov 2026"}</small></div>
       </aside>
       <article className="docs-content">
+      {version === "1.0" && <p className="docs-version-banner">{isId ? "Versi 1.0 — flow lama disimpan sebagai arsip." : "Version 1.0 — the previous workflow is preserved as an archive."} <a href="/docs/v1.1">{isId ? "Buka versi 1.1 →" : "Open version 1.1 →"}</a></p>}
       <header className="docs-hero">
         <div className="docs-hero-top">
           <p className="docs-eyebrow">
@@ -251,6 +279,7 @@ export default function DocsView() {
 
 
       {/* ------------------------------------------------------------------ */}
+      {version === "1.0" ? (
       <section className="docs-section" id="overview" aria-labelledby="h-overview">
         <div className="docs-section-head">
           <BookOpenCheck aria-hidden="true" size={20} strokeWidth={2} />
@@ -319,11 +348,13 @@ export default function DocsView() {
           </div>
         </div>
       </section>
+      ) : <DocsV11Overview lang={lang} />}
 
       {/* ------------------------------------------------------------------ */}
       <DocsGlossary lang={lang} />
       <DocsRules lang={lang} />
 
+      {version === "1.0" ? (
       <section className="docs-section" id="end-to-end-flow" aria-labelledby="h-end-to-end-flow">
         <SectionHead
           icon={Workflow}
@@ -433,8 +464,10 @@ export default function DocsView() {
           </Flow>
         </div>
       </section>
+      ) : <DocsV11LeadFlow lang={lang} />}
 
       {/* ------------------------------------------------------------------ */}
+      {version === "1.0" ? (
       <section className="docs-section" id="incorporation" aria-labelledby="h-incorporation">
         <SectionHead
           icon={Building2}
@@ -714,8 +747,11 @@ export default function DocsView() {
           </Flow>
         </div>
       </section>
+      ) : <DocsV11Incorporation lang={lang} />}
+      {version === "1.1" && <DocsV11Screening lang={lang} />}
 
       {/* ------------------------------------------------------------------ */}
+      {version === "1.0" ? (
       <section className="docs-section" id="onboarding" aria-labelledby="h-onboarding">
         <SectionHead
           icon={Rocket}
@@ -775,6 +811,8 @@ export default function DocsView() {
         </div>
         <p>{isId ? "Catatan: papan sumber belum merinci tindak lanjut hasil KYC/KYB yang gagal. Jalur koreksi dan penolakan final di atas merupakan usulan penanganan operasional; kriteria keputusan perlu ditetapkan oleh tim SOAS." : "Note: the source board does not detail failed KYC/KYB handling. The correction and final-rejection paths above are proposed operational handling; SOAS must define the decision criteria."}</p>
       </section>
+      ) : <DocsV11Onboarding lang={lang} />}
+      {version === "1.1" && <DocsV11Contracts lang={lang} />}
 
       {/* ------------------------------------------------------------------ */}
       <section className="docs-section" id="client-database" aria-labelledby="h-client-database">
@@ -920,6 +958,7 @@ export default function DocsView() {
             </Branches>
           </Flow>
         </div>
+      {version === "1.1" && <DocsV11RecordModel lang={lang} />}
       </section>
 
       {/* ------------------------------------------------------------------ */}
@@ -1109,6 +1148,7 @@ export default function DocsView() {
       <DocsFyeAlerts lang={lang} />
       <DocsCommunicationFlow lang={lang} />
 
+      {version === "1.0" ? (
       <section className="docs-section" id="lead-reports" aria-labelledby="h-lead-reports">
         <SectionHead
           icon={FileSignature}
@@ -1158,9 +1198,10 @@ export default function DocsView() {
           </Flow>
         </div>
       </section>
+      ) : <DocsV11LeadReport lang={lang} />}
 
       {/* ------------------------------------------------------------------ */}
-      <DocsMonthlyFlow lang={lang} />
+      <DocsMonthlyFlow lang={lang} version={version} />
 
       <section className="docs-section" id="open-notes" aria-labelledby="h-open-notes">
         <SectionHead
@@ -1174,6 +1215,7 @@ export default function DocsView() {
             : "Ambiguous or incomplete items on the original board. Requires confirmation prior to full implementation."}
         </p>
 
+        {version === "1.1" && <DocsV11OpenNotes lang={lang} />}
         <ul className="docs-open-list">
           <li>
             {isId ? (

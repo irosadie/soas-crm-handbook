@@ -11,6 +11,14 @@ bun run dev
 
 Buka [http://localhost:3000/docs](http://localhost:3000/docs).
 
+## Versi flow
+
+- `/docs` dan `/docs/v1.1`: flow terbaru berdasarkan Excalidraw dan meeting Mr Lau.
+- `/docs/v1.0`: flow sebelumnya, tetap tersedia sebagai arsip.
+- Pilih versi di header; bahasa, tema, pencarian dan daftar isi tersedia pada kedua versi.
+
+Versi 1.1 memperbaiki intake/quotation incorporation, bundel tanda tangan, identitas dan screening, handover CSP lama, kontrak/periode layanan serta rekonsiliasi WIP. Isi flow 1.0 tetap dipertahankan. Ini pembaruan dokumentasi proses, bukan implementasi database atau integrasi CRM.
+
 ## Login demo
 
 - Username: `demo`
