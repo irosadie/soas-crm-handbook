@@ -127,7 +127,11 @@
 .docs-header-brand svg { flex: none; color: var(--d-accent); }
 .docs-header-brand small { display: block; margin-top: 4px; color: var(--d-muted); font-size: 10px; font-weight: 500; }
 .docs-toc { display: flex; flex-direction: column; gap: 2px; }
-.docs-toc-label { margin: 0 0 8px; color: var(--d-muted); font-size: 10px; font-weight: 700; letter-spacing: .13em; }
+.docs-toc-label { margin: 0; color: var(--d-muted); font-size: 10px; font-weight: 700; letter-spacing: .13em; }
+.docs-sidebar-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.docs-sidebar-toggle { display: inline-flex; flex: none; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; border: 1px solid var(--d-border); border-radius: 6px; background: var(--d-bg); color: var(--d-brand); cursor: pointer; }
+.docs-sidebar-toggle:hover { background: var(--d-surface); border-color: var(--d-accent); }
+.docs-sidebar-toggle:focus-visible { outline: 2px solid var(--d-accent); outline-offset: 3px; }
 .docs-toc a {
   display: flex;
   align-items: center;
@@ -985,4 +989,16 @@
   .docs-header-identity { width: 100%; justify-content: space-between; gap: 8px; }
   .docs-header-identity .docs-header-brand { width: auto; }
   .docs-header-actions { width: 100%; justify-content: space-between; gap: 8px; }
+}
+
+.docs-page.is-sidebar-collapsed { grid-template-columns: 44px minmax(0, 1fr); gap: 24px; }
+.docs-page.is-sidebar-collapsed .docs-sidebar { padding-right: 8px; }
+.is-sidebar-collapsed .docs-sidebar-head { justify-content: center; margin-bottom: 0; }
+.is-sidebar-collapsed .docs-toc-label { display: none; }
+@media (max-width: 760px) {
+  .docs-sidebar-head .docs-toc-label { margin-bottom: 0; }
+  .docs-sidebar-toggle { width: 40px; height: 40px; }
+  .docs-page.is-sidebar-collapsed .docs-sidebar { padding: 0 0 12px; margin-bottom: 16px; }
+  .is-sidebar-collapsed .docs-sidebar-head { justify-content: space-between; }
+  .is-sidebar-collapsed .docs-toc-label { display: block; }
 }

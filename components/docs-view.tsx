@@ -10,6 +10,8 @@ import {
   FileSignature,
   HelpCircle,
   Moon,
+  PanelLeftClose,
+  PanelLeftOpen,
   Sun,
   Network,
   Rocket,
@@ -109,6 +111,14 @@ function readSavedLanguage(): DocsLang {
 
 type DocsTheme = "light" | "dark";
 
+function readSavedSidebarCollapsed(): boolean {
+  try {
+    return window.localStorage.getItem("crm_docs_sidebar_collapsed") === "true";
+  } catch {
+    return false;
+  }
+}
+
 function readSavedTheme(): DocsTheme {
   try {
     const saved = window.localStorage.getItem("crm_docs_theme");
@@ -127,6 +137,18 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
   const [selectedTheme, setTheme] = useState<DocsTheme | null>(null);
   const theme = selectedTheme ?? (hydrated ? readSavedTheme() : "light");
   const isDark = theme === "dark";
+  const [selectedSidebarCollapsed, setSidebarCollapsed] = useState<boolean | null>(null);
+  const sidebarCollapsed = selectedSidebarCollapsed ?? (hydrated ? readSavedSidebarCollapsed() : false);
+
+  const handleToggleSidebar = () => {
+    const next = !sidebarCollapsed;
+    setSidebarCollapsed(next);
+    try {
+      window.localStorage.setItem("crm_docs_sidebar_collapsed", String(next));
+    } catch {
+      // Keep the sidebar choice for this visit when storage is unavailable.
+    }
+  };
 
   const handleToggleTheme = () => {
     const next = isDark ? "light" : "dark";
@@ -239,13 +261,28 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
           </div>
         </div>
       </header>
-      <div className="docs-page">
+      <div className={`docs-page${sidebarCollapsed ? " is-sidebar-collapsed" : ""}`}>
       <aside className="docs-sidebar">
-        <nav className="docs-toc" aria-label={isId ? "Daftar isi" : "Table of contents"}>
+        <div className="docs-sidebar-head">
           <p className="docs-toc-label">{isId ? "DAFTAR ISI" : "ON THIS PAGE"}</p>
+          <button
+            type="button"
+            className="docs-sidebar-toggle"
+            aria-expanded={!sidebarCollapsed}
+            aria-controls="docs-toc-panel"
+            aria-label={isId ? (sidebarCollapsed ? "Buka daftar isi" : "Kecilkan daftar isi") : (sidebarCollapsed ? "Expand table of contents" : "Collapse table of contents")}
+            title={isId ? (sidebarCollapsed ? "Buka daftar isi" : "Kecilkan daftar isi") : (sidebarCollapsed ? "Expand table of contents" : "Collapse table of contents")}
+            onClick={handleToggleSidebar}
+          >
+            {sidebarCollapsed ? <PanelLeftOpen size={17} aria-hidden="true" /> : <PanelLeftClose size={17} aria-hidden="true" />}
+          </button>
+        </div>
+        <div id="docs-toc-panel" hidden={sidebarCollapsed}>
+        <nav className="docs-toc" aria-label={isId ? "Daftar isi" : "Table of contents"}>
           {sections.map((section, index) => <a key={section.id} href={`#${section.id}`} onClick={() => setActiveSection(section.id)} aria-current={activeSection === section.id ? "location" : undefined}><span className="docs-toc-number">{String(index + 1).padStart(2, "0")}</span>{section.label}</a>)}
         </nav>
         <div className="docs-sidebar-footer"><span>ACRA · IRAS · SOAS</span><small>{isId ? "Rujukan diperiksa 10 Nov 2026" : "Sources checked 10 Nov 2026"}</small></div>
+        </div>
       </aside>
       <article className="docs-content">
       {version === "1.0" && <p className="docs-version-banner">{isId ? "Versi 1.0 — flow lama disimpan sebagai arsip." : "Version 1.0 — the previous workflow is preserved as an archive."} <a href="/docs/v1.2">{isId ? "Buka versi 1.2 →" : "Open version 1.2 →"}</a></p>}
@@ -395,7 +432,9 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
               <p>{isId ? "Simpan detail lead & statusnya." : "Store lead details & pipeline status."}</p>
             </FlowNode>
             <FlowArrow />
-            <FlowNode kind="decision" lang={lang} title={isId ? "Jenis layanan & progres lead" : "Service Type & Lead Progress"} />
+            <FlowNode kind="decision" lang={lang} title={isId ? "Jenis layanan & progres lead" : "Service Type & Lead Progress"}>
+              {version === "1.2" && <p>{isId ? "AI dapat mengekstrak informasi dan menentukan jenis layanan otomatis, atau staf memilihnya secara manual." : "AI can extract information and identify the service type automatically, or staff can select it manually."}</p>}
+            </FlowNode>
             <FlowArrow plain />
             <Branches>
               <Branch label="Incorporation">
