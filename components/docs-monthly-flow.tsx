@@ -1,7 +1,7 @@
 import { CalendarClock } from "lucide-react";
 import { Branch, Branches, Flow, FlowArrow, FlowNode, type DocsLang } from "@/components/docs-flow";
 
-export default function DocsMonthlyFlow({ lang, version = "1.0" }: { lang: DocsLang; version?: "1.0" | "1.1" }) {
+export default function DocsMonthlyFlow({ lang, version = "1.0" }: { lang: DocsLang; version?: "1.0" | "1.1" | "1.2" }) {
   const isId = lang === "id";
   const reports = [
     ["A", "Pengumpulan dokumen", "Document Collection", "Daftar klien yang harus dinotifikasi, jumlah sudah dinotifikasi, dokumen lengkap dan outstanding. Notice segera setelah FYE, permintaan dokumen bulanan dan reminder mingguan melalui Comm Hub sampai staf mengambil alih lewat telepon; catat hasil follow-up di percakapan terkait. Pantau kesiapan akun dan ECI dalam 3 bulan setelah FYE jika wajib filing; cek waiver ECI.", "List clients requiring notice, notified counts, complete and outstanding documents. Send notice immediately after FYE, request documents monthly, and remind weekly through Comm Hub until staff take over by phone; record follow-up outcomes in the related conversation. Track accounts and ECI readiness within 3 months after FYE where filing is required; check ECI waivers."],

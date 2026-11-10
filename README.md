@@ -13,11 +13,12 @@ Buka [http://localhost:3000/docs](http://localhost:3000/docs).
 
 ## Versi flow
 
-- `/docs` dan `/docs/v1.1`: flow terbaru berdasarkan Excalidraw dan meeting Mr Lau.
-- `/docs/v1.0`: flow sebelumnya, tetap tersedia sebagai arsip.
-- Pilih versi di header; bahasa, tema, pencarian dan daftar isi tersedia pada kedua versi.
+- `/docs` dan `/docs/v1.2`: flow versi 1.2 (disalin 100% identik dari versi 1.0 sebagai baseline).
+- `/docs/v1.1`: flow berdasarkan Excalidraw dan meeting Mr Lau.
+- `/docs/v1.0`: flow awal, tetap tersedia sebagai arsip.
+- Pilih versi di header; bahasa, tema, pencarian dan daftar isi tersedia pada semua versi.
 
-Versi 1.1 memperbaiki intake/quotation incorporation, bundel tanda tangan, identitas dan screening, handover CSP lama, kontrak/periode layanan serta rekonsiliasi WIP. Isi flow 1.0 tetap dipertahankan. Ini pembaruan dokumentasi proses, bukan implementasi database atau integrasi CRM.
+Versi 1.2 disalin 100% identik dari versi 1.0 sebagai baseline kerja baru. Versi 1.1 memperbaiki intake/quotation incorporation, bundel tanda tangan, identitas dan screening, handover CSP lama, kontrak/periode layanan serta rekonsiliasi WIP. Isi flow 1.0 tetap dipertahankan.
 
 ## Login demo
 

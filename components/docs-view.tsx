@@ -119,7 +119,7 @@ function readSavedTheme(): DocsTheme {
   }
 }
 
-export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" }) {
+export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" | "1.2" }) {
   const router = useRouter();
   const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
   const [selectedLang, setLang] = useState<DocsLang | null>(null);
@@ -148,17 +148,18 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
   };
 
   const isId = lang === "id";
+  const isV11 = version === "1.1";
   const sections = useMemo(() => {
-    if (version === "1.0") return navSections[lang];
+    if (!isV11) return navSections[lang];
     return navSections[lang].flatMap(section => {
       if (section.id === "incorporation") return [section, { id: "identity-screening", label: isId ? "Identitas & screening" : "Identity & Screening" }];
       if (section.id === "onboarding") return [section, { id: "service-contracts", label: isId ? "Layanan & kontrak" : "Services & Contracts" }];
       return [section];
     });
-  }, [lang, isId, version]);
+  }, [lang, isId, isV11]);
 
   const handleSetVersion = (next: string) => {
-    if (next !== "1.0" && next !== "1.1") return;
+    if (next !== "1.0" && next !== "1.1" && next !== "1.2") return;
     const hash = window.location.hash;
     const sharedAnchor = navSections.id.some(section => hash === `#${section.id}` || hash === `#h-${section.id}`) || hash.startsWith("#glossary-");
     router.push(`/docs/v${next}${window.location.search}${sharedAnchor ? hash : "#overview"}`);
@@ -199,7 +200,8 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             <label className="docs-version-control">
               <span className="sr-only">{isId ? "Versi panduan" : "Handbook version"}</span>
               <select aria-label={isId ? "Versi panduan" : "Handbook version"} value={version} onChange={event => handleSetVersion(event.target.value)}>
-                <option value="1.1">v1.1 · {isId ? "Terbaru" : "Latest"}</option>
+                <option value="1.2">v1.2 · {isId ? "Terbaru" : "Latest"}</option>
+                <option value="1.1">v1.1</option>
                 <option value="1.0">v1.0 · {isId ? "Arsip" : "Archive"}</option>
               </select>
             </label>
@@ -246,7 +248,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
         <div className="docs-sidebar-footer"><span>ACRA · IRAS · SOAS</span><small>{isId ? "Rujukan diperiksa 10 Nov 2026" : "Sources checked 10 Nov 2026"}</small></div>
       </aside>
       <article className="docs-content">
-      {version === "1.0" && <p className="docs-version-banner">{isId ? "Versi 1.0 — flow lama disimpan sebagai arsip." : "Version 1.0 — the previous workflow is preserved as an archive."} <a href="/docs/v1.1">{isId ? "Buka versi 1.1 →" : "Open version 1.1 →"}</a></p>}
+      {version === "1.0" && <p className="docs-version-banner">{isId ? "Versi 1.0 — flow lama disimpan sebagai arsip." : "Version 1.0 — the previous workflow is preserved as an archive."} <a href="/docs/v1.2">{isId ? "Buka versi 1.2 →" : "Open version 1.2 →"}</a></p>}
       <header className="docs-hero">
         <div className="docs-hero-top">
           <p className="docs-eyebrow">
@@ -279,7 +281,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
 
 
       {/* ------------------------------------------------------------------ */}
-      {version === "1.0" ? (
+      {!isV11 ? (
       <section className="docs-section" id="overview" aria-labelledby="h-overview">
         <div className="docs-section-head">
           <BookOpenCheck aria-hidden="true" size={20} strokeWidth={2} />
@@ -354,7 +356,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
       <DocsGlossary lang={lang} />
       <DocsRules lang={lang} />
 
-      {version === "1.0" ? (
+      {!isV11 ? (
       <section className="docs-section" id="end-to-end-flow" aria-labelledby="h-end-to-end-flow">
         <SectionHead
           icon={Workflow}
@@ -467,7 +469,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
       ) : <DocsV11LeadFlow lang={lang} />}
 
       {/* ------------------------------------------------------------------ */}
-      {version === "1.0" ? (
+      {!isV11 ? (
       <section className="docs-section" id="incorporation" aria-labelledby="h-incorporation">
         <SectionHead
           icon={Building2}
@@ -751,7 +753,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
       {version === "1.1" && <DocsV11Screening lang={lang} />}
 
       {/* ------------------------------------------------------------------ */}
-      {version === "1.0" ? (
+      {!isV11 ? (
       <section className="docs-section" id="onboarding" aria-labelledby="h-onboarding">
         <SectionHead
           icon={Rocket}
@@ -1148,7 +1150,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
       <DocsFyeAlerts lang={lang} />
       <DocsCommunicationFlow lang={lang} />
 
-      {version === "1.0" ? (
+      {!isV11 ? (
       <section className="docs-section" id="lead-reports" aria-labelledby="h-lead-reports">
         <SectionHead
           icon={FileSignature}
