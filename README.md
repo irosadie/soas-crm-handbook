@@ -11,6 +11,13 @@ bun run dev
 
 Buka [http://localhost:3000/docs](http://localhost:3000/docs).
 
+## Login demo
+
+- Username: `demo`
+- Password: `demo123`
+
+Halaman `/docs` memakai HTTP Basic Auth dan tidak memerlukan database. Untuk mengganti akun di hosting, atur `DOCS_DEMO_USERNAME` dan `DOCS_DEMO_PASSWORD` sebagai environment variables. Kredensial demo ini memang bersifat publik; jangan gunakan gate ini untuk melindungi data rahasia.
+
 ## Pemeriksaan kode
 
 ```bash
