@@ -126,26 +126,26 @@
 }
 .docs-header-brand svg { flex: none; color: var(--d-accent); }
 .docs-header-brand small { display: block; margin-top: 4px; color: var(--d-muted); font-size: 10px; font-weight: 500; }
-.docs-toc { display: flex; flex-direction: column; gap: 3px; }
-.docs-toc-label { margin: 0 0 12px; color: var(--d-muted); font-size: 10px; font-weight: 700; letter-spacing: .13em; }
+.docs-toc { display: flex; flex-direction: column; gap: 2px; }
+.docs-toc-label { margin: 0 0 8px; color: var(--d-muted); font-size: 10px; font-weight: 700; letter-spacing: .13em; }
 .docs-toc a {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 9px;
+  gap: 8px;
+  padding: 6px 8px;
   border-left: 2px solid transparent;
   border-radius: 0 5px 5px 0;
   color: var(--d-muted);
   font-size: 11.5px;
   font-weight: 500;
-  line-height: 1.45;
+  line-height: 1.35;
   text-decoration: none;
 }
 .docs-toc-number { font-size: 10px; font-variant-numeric: tabular-nums; opacity: .6; }
 .docs-toc a:hover, .docs-toc a:focus-visible { background: #f1f6f9; color: var(--d-brand); }
 .docs-toc a[aria-current="location"] { border-left-color: var(--d-accent); background: #edf5f9; color: var(--d-brand); font-weight: 700; }
 .docs-toc a:focus-visible { outline: 2px solid var(--d-accent); outline-offset: 2px; }
-.docs-sidebar-footer { display: grid; gap: 7px; margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--d-border); color: var(--d-muted); font-size: 10px; }
+.docs-sidebar-footer { display: grid; gap: 5px; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--d-border); color: var(--d-muted); font-size: 10px; }
 .docs-sidebar-footer small { font-size: 9px; }
 
 .docs-section {
@@ -828,7 +828,8 @@
   .docs-page { display: block; }
   .docs-sidebar { position: static; max-height: none; border-right: 0; padding: 0 0 20px; margin-bottom: 22px; border-bottom: 1px solid var(--d-border); }
 
-  .docs-toc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .docs-toc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
+  .docs-toc a { padding: 9px 8px; }
   .docs-toc-label { grid-column: 1 / -1; margin-bottom: 6px; }
   .docs-sidebar-footer { display: none; }
   .docs-content > .docs-section { padding: 26px 0; }
