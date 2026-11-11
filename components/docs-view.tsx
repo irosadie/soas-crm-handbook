@@ -886,9 +886,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
           <Flow label={isId ? "Flow onboarding" : "Onboarding workflow"}>
             <FlowNode kind="start" lang={lang} title={isId ? "Perusahaan existing mengajukan onboarding" : "Existing Company Requests Onboarding"} />
             <FlowArrow />
-            <FlowNode lang={lang} title={version === "1.1" ? (isId ? "Ambil atau minta Business Profile perusahaan" : "Retrieve or Request Company Business Profile") : (isId ? "Ambil Business Profile perusahaan" : "Retrieve Company Business Profile")}>
-              {version === "1.1" && <p><strong>{isId ? "Usulan biaya screening: " : "Proposed screening fee: "}</strong>{isId ? "Biaya KYC/KYB dapat dihitung berdasarkan jumlah screening individu dan entitas yang diperlukan. Gunakan Business Profile untuk memperkirakan cakupannya, lalu sepakati tarif dan estimasi biaya dengan klien sebelum screening. Catat jumlah screening aktual untuk penagihan sesuai kesepakatan SOAS." : "KYC/KYB fees may be based on the number of individual and entity screenings required. Use the Business Profile to estimate the scope, then agree rates and estimated fees with the client before screening. Record the actual screening count for billing under the agreed SOAS terms."}</p>}
-            </FlowNode>
+            <FlowNode lang={lang} title={version === "1.1" ? (isId ? "Ambil atau minta Business Profile perusahaan" : "Retrieve or Request Company Business Profile") : (isId ? "Ambil Business Profile perusahaan" : "Retrieve Company Business Profile")} />
             <FlowArrow />
             <DocsReturnLoop
               fromId="onboarding-corrected-documents"
@@ -896,7 +894,9 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
               enabled={version === "1.0"}
               label={isId ? "Setelah data atau dokumen diperbaiki, kembali ke pemeriksaan KYC/KYB untuk penilaian ulang oleh SOAS." : "After correcting the information or documents, return to KYC/KYB screening for SOAS reassessment."}
             >
-              <FlowNode id="onboarding-screening" lang={lang} title={isId ? "Lakukan pemeriksaan KYC/KYB" : "Perform KYC/KYB Screening"} />
+              <FlowNode id="onboarding-screening" lang={lang} title={isId ? "Lakukan pemeriksaan KYC/KYB" : "Perform KYC/KYB Screening"}>
+                {version === "1.1" && <p><strong>{isId ? "Catatan: " : "Note: "}</strong>{isId ? "Proses ini mungkin memerlukan biaya." : "A fee may be required for this process."}</p>}
+              </FlowNode>
               <FlowArrow />
               <FlowNode kind="decision" lang={lang} title={isId ? "Hasil pemeriksaan KYC/KYB oleh SOAS?" : "SOAS KYC/KYB Screening Outcome?"} />
               <FlowArrow plain />
