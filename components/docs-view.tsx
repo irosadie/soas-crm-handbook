@@ -335,8 +335,8 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             <h4>1. Leads</h4>
             <p>
               {isId
-                ? "Lead dari website dan referral dicatat langsung. Pertanyaan melalui email atau WhatsApp masuk ke Comm Hub untuk ditinjau sebelum dikonversi menjadi lead. Jenis layanan: incorporation / onboarding; progres: in progress, rejected, atau selesai."
-                : "Website and referral enquiries are recorded directly as leads. Email or WhatsApp enquiries go to Comm Hub for review before conversion to a lead. Service types: incorporation / onboarding; progress: in progress, rejected, or completed."}
+                ? "Website dan referral langsung masuk ke Leads. Email dan WhatsApp masuk sebagai percakapan/kontak di Comm Hub, lalu dikonversi menjadi lead. Jenis layanan: incorporation / onboarding; progres: in progress, rejected, atau selesai."
+                : "Website and referrals go directly to Leads. Email and WhatsApp first arrive as conversations/contacts in Comm Hub, then convert to leads. Service types: incorporation / onboarding; progress: in progress, rejected, or completed."}
             </p>
           </div>
           <div className="docs-card">
@@ -411,20 +411,20 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             <Branches mergeToNext>
               <Branch mergeTail label={isId ? "Langsung menjadi lead" : "Direct to Lead"}>
                 <FlowNode kind="external" lang={lang} title="Website (Landing Page)" />
+              </Branch>
+              <Branch mergeTail label={isId ? "Melalui Comm Hub" : "Via Comm Hub"}>
+                <FlowNode kind="external" lang={lang} title="Email / WhatsApp" />
                 <FlowArrow />
-                <FlowNode kind="store" lang={lang} title={isId ? "Buat lead dari formulir website" : "Create Lead from Website Form"} />
+                <FlowNode id="lead-intake-comm-hub" kind="store" lang={lang} title="Comm Hub">
+                  {isId ? "Email dan WhatsApp diterima sebagai percakapan/kontak sebelum menjadi lead." : "Email and WhatsApp arrive as conversations/contacts before becoming leads."}
+                </FlowNode>
+                <FlowArrow />
+                <FlowNode id="lead-intake-conversion" lang={lang} title={isId ? "Konversi menjadi lead" : "Convert to Lead"}>
+                  {isId ? "Buat lead dari percakapan Comm Hub dan tautkan riwayat komunikasinya." : "Create a lead from the Comm Hub conversation and link its communication history."}
+                </FlowNode>
               </Branch>
               <Branch mergeTail label={isId ? "Langsung menjadi lead" : "Direct to Lead"}>
                 <FlowNode kind="external" lang={lang} title="Referral" />
-                <FlowArrow />
-                <FlowNode kind="store" lang={lang} title={isId ? "Catat referral sebagai lead" : "Record Referral as Lead"} />
-              </Branch>
-              <Branch mergeTail label={isId ? "Melalui Comm Hub" : "Via Comm Hub"}>
-                <FlowNode kind="external" lang={lang} title={isId ? "Email / WhatsApp" : "Email / WhatsApp"} />
-                <FlowArrow />
-                <FlowNode kind="store" lang={lang} title={isId ? "Tinjau percakapan & konversi menjadi lead" : "Review Conversation & Convert to Lead"}>
-                  {isId ? "Comm Hub menerima dan mencatat pesan email/WhatsApp. Staf meninjau inquiry, mengklasifikasikan kebutuhan, lalu membuat record lead dengan riwayat percakapan tertaut." : "Comm Hub receives and records email/WhatsApp messages. Staff review the enquiry, classify its needs, then create a lead record linked to the conversation history."}
-                </FlowNode>
               </Branch>
             </Branches>
             <FlowArrow />

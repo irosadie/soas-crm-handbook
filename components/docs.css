@@ -579,17 +579,10 @@
   padding: 26px 8px 0;
 }
 
-.dfb-merge > .dfb-col {
-  padding-bottom: 26px;
-}
-
 .dfb-merge-tail {
-  position: absolute;
-  bottom: 0;
-  left: calc(50% - 1px);
-  z-index: 1;
+  display: block;
+  flex: 1 0 26px;
   width: 2px;
-  height: 26px;
   background: var(--d-line);
 }
 
