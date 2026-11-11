@@ -517,8 +517,8 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
         />
         <p>
           {version === "1.1" ? (isId
-            ? "Kumpulkan informasi minimum, seperti jumlah director dan shareholder, untuk menentukan biaya. Informasi klien dikumpulkan melalui Communication Hub; data formulir lengkap disiapkan untuk pengajuan ACRA."
-            : "Collect minimum information, such as director and shareholder headcounts, to determine the fee. Gather client information through Communication Hub and prepare the complete form data for ACRA filing.") : isId
+            ? "Kumpulkan informasi jumlah director, shareholder individu dan shareholder korporasi untuk menentukan biaya. Informasi klien dikumpulkan melalui Communication Hub; data formulir lengkap disiapkan untuk pengajuan ACRA."
+            : "Collect the number of directors, individual shareholders and corporate shareholders to determine the fee. Gather client information through Communication Hub and prepare the complete form data for ACRA filing.") : isId
             ? "Mengumpulkan semua data untuk formulir incorporation ke ACRA. Informasi dari klien dikumpulkan lewat Communication Hub; alur percakapan dan tindak lanjut ada pada bagian Comm Hub & E-portal."
             : "Collecting all intake data for the ACRA incorporation application. Client information is gathered via Communication Hub; conversation and follow-up steps are detailed in Comm Hub & E-Portal."}
         </p>
@@ -533,7 +533,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             <FlowNode
               lang={lang}
               title={
-                version === "1.1" ? (isId ? "Kumpulkan informasi minimum untuk menentukan biaya" : "Collect Minimum Information to Determine Fees") : isId
+                version === "1.1" ? (isId ? "Kumpulkan informasi untuk menentukan biaya" : "Collect Information to Determine Fees") : isId
                   ? "Kumpulkan data formulir incorporation ACRA"
                   : "Collect ACRA Incorporation Form Data"
               }
@@ -541,11 +541,12 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
               <ul>
                 <li>
                   {version === "1.1" ? (isId
-                    ? "Jumlah director dan shareholder untuk menentukan biaya."
-                    : "Director and shareholder headcounts to determine the fee.") : isId
+                    ? "Jumlah director dan shareholder individu."
+                    : "Number of directors and individual shareholders.") : isId
                     ? "Jumlah shareholder & director (menentukan jumlah KYC)"
                     : "Shareholder & director headcounts (determines KYC volume)"}
                 </li>
+                {version === "1.1" && <li>{isId ? "Jumlah shareholder korporasi." : "Number of corporate shareholders."}</li>}
               </ul>
             </FlowNode>
             <FlowArrow />
