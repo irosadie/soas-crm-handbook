@@ -673,7 +673,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
               id="incorporation-submit"
               lang={lang}
               title={
-                isId
+                version === "1.2" ? (isId ? "Ajukan aplikasi ke ACRA" : "Submit Application to ACRA") : isId
                   ? "Ajukan aplikasi ke ACRA melalui corpora8e"
                   : "Submit Application to ACRA through corpora8e"
               }
