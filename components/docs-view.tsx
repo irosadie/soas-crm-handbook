@@ -779,8 +779,8 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
               lang={lang}
               title={
                 isId
-                  ? "Notifikasi ke shareholder"
-                  : "Shareholder Notification"
+                  ? (version === "1.1" ? "Notifikasi ke shareholder / director" : "Notifikasi ke shareholder")
+                  : (version === "1.1" ? "Shareholder / Director Notification" : "Shareholder Notification")
               }
             >
               <ul>
