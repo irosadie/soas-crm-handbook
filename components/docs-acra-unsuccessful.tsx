@@ -19,7 +19,8 @@ export default function DocsAcraUnsuccessful({ lang }: { lang: DocsLang }) {
         </FlowNode>
       </Branch>
       <Branch label="Rejected">
-        <FlowNode id="incorporation-rejected" kind="end" lang={lang} title={isId ? "Aplikasi ditolak — proses berakhir" : "Application Rejected — Process Ends"}>
+        <FlowNode id="incorporation-rejected" kind="end" lang={lang} title={isId ? "Aplikasi ditolak — proses berakhir" : "Application Rejected — Process Ends"} />
+        <FlowNode id="incorporation-rejection-note" kind="note" lang={lang} title={isId ? "Catatan" : "Note"}>
           {isId ? "Pengajuan ini tidak dapat diajukan ulang sesuai keputusan ACRA. Catat keputusan dan alasan yang tersedia; ACRA dapat tidak menjelaskan alasannya secara lengkap. Beri tahu klien, simpan riwayat, dan tutup proses tanpa aktivasi klien dari pengajuan ini." : "This application cannot be resubmitted under ACRA's decision. Record the outcome and any available reasons; ACRA may not disclose the full reasons. Inform the client, retain the history and close the process without client activation from this application."}
         </FlowNode>
       </Branch>
