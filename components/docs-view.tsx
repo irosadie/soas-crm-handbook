@@ -842,7 +842,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
           <Flow label={isId ? "Flow onboarding" : "Onboarding workflow"}>
             <FlowNode kind="start" lang={lang} title={isId ? "Perusahaan existing mengajukan onboarding" : "Existing Company Requests Onboarding"} />
             <FlowArrow />
-            <FlowNode lang={lang} title={isId ? "Ambil Business Profile perusahaan" : "Retrieve Company Business Profile"} />
+              <FlowNode lang={lang} title={version === "1.2" ? (isId ? "Ambil atau minta Business Profile perusahaan" : "Retrieve or Request Company Business Profile") : (isId ? "Ambil Business Profile perusahaan" : "Retrieve Company Business Profile")} />
             <FlowArrow />
             <DocsReturnLoop
               fromId="onboarding-corrected-documents"
