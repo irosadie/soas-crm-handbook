@@ -712,7 +712,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
             <Branches>
               <Branch label={isId ? "Ditolak" : "Rejected"}>
                 <FlowNode lang={lang} title={isId ? "Tinjau alasan penolakan & perbaiki aplikasi" : "Review Rejection Reasons & Correct Application"}>
-                  {isId ? "Misalnya nama sudah dipakai perusahaan lain." : "For example, the proposed company name is already in use."}
+                  {version === "1.2" ? (isId ? "ACRA memberikan alasan penolakan. Staf harus segera meninjau dan memperbaiki aplikasi sesuai alasan tersebut, misalnya nama perusahaan tidak tersedia." : "ACRA provides the rejection reasons. Staff must review and correct the application as soon as possible, for example if the proposed company name is unavailable.") : (isId ? "Misalnya nama sudah dipakai perusahaan lain." : "For example, the proposed company name is already in use.")}
                 </FlowNode>
                 <FlowArrow />
                 <FlowNode id="acra-revision-consent" lang={lang} title={isId ? "Minta persetujuan klien atas perbaikan" : "Obtain Client Approval of the Corrections"}>
