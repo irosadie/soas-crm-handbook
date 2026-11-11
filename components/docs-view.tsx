@@ -887,6 +887,12 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             <FlowNode kind="start" lang={lang} title={isId ? "Perusahaan existing mengajukan onboarding" : "Existing Company Requests Onboarding"} />
             <FlowArrow />
             <FlowNode lang={lang} title={version === "1.1" ? (isId ? "Ambil atau minta Business Profile perusahaan" : "Retrieve or Request Company Business Profile") : (isId ? "Ambil Business Profile perusahaan" : "Retrieve Company Business Profile")} />
+            {version === "1.1" && <>
+              <FlowArrow />
+              <FlowNode id="onboarding-csp-handover" lang={lang} title={isId ? "Kumpulkan seluruh dokumen dari CSP sebelumnya" : "Get All Documents from Previous CSP"}>
+                {isId ? "Minta dan kumpulkan seluruh dokumen serta catatan perusahaan yang disimpan CSP sebelumnya, dalam bentuk digital maupun fisik." : "Request and collect all company documents and records held by the previous CSP, in digital or physical form."}
+              </FlowNode>
+            </>}
             <FlowArrow />
             <DocsReturnLoop
               fromId="onboarding-corrected-documents"
@@ -922,12 +928,6 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
                   </FlowNode>
                 </Branch>
                 <Branch label={isId ? "Disetujui" : "Approved"}>
-                  {version === "1.1" && <>
-                    <FlowNode id="onboarding-csp-handover" lang={lang} title={isId ? "Kumpulkan seluruh dokumen dari CSP sebelumnya" : "Get All Documents from Previous CSP"}>
-                      {isId ? "Minta dan kumpulkan seluruh dokumen serta catatan perusahaan yang disimpan CSP sebelumnya, dalam bentuk digital maupun fisik." : "Request and collect all company documents and records held by the previous CSP, in digital or physical form."}
-                    </FlowNode>
-                    <FlowArrow />
-                  </>}
                   <FlowNode lang={lang} title={version === "1.1" ? (isId ? "Kontrak Layanan" : "Service Contract") : (isId ? "Pilih layanan SOAS" : "Select SOAS Services")}>
                     {isId ? "Pilih paket atau item Corporate Secretarial / ART. Layanan di luar kontrak ditagih terpisah sebagai ad hoc." : "Select Corporate Secretarial / ART packages or individual items. Out-of-contract services are billed separately as ad hoc."}
                   </FlowNode>
