@@ -549,6 +549,22 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
                 {version === "1.1" && <li>{isId ? "Jumlah shareholder korporasi." : "Number of corporate shareholders."}</li>}
               </ul>
             </FlowNode>
+            {version === "1.1" && <>
+              <FlowArrow />
+              <FlowNode id="incorporation-resident-director" lang={lang} title={isId ? "Pastikan resident director & kebutuhan nominee" : "Confirm Resident Director & Nominee Requirements"}>
+                <ul>
+                  <li>{isId ? "Perusahaan wajib memiliki minimal satu direktur yang ordinarily resident di Singapura saat incorporation." : "The company must have at least one director ordinarily resident in Singapore at incorporation."}</li>
+                  <li>{isId ? "Jika belum ada, klien dapat menunjuk nominee director yang memenuhi syarat domisili dan kelayakan direktur. Pastikan calon resident director sebelum filing ke ACRA." : "If none is available, the client may appoint a nominee director who meets the residency and director eligibility requirements. Confirm the proposed resident director before filing with ACRA."}</li>
+                  <li>{isId ? "Untuk jasa nominee director secara bisnis, pengaturan harus melalui CSP terdaftar yang menilai calon tersebut fit and proper. Nominee tetap memiliki kewajiban hukum sebagai direktur." : "Nominee directorship provided by way of business must be arranged through a registered CSP that assesses the individual as fit and proper. A nominee retains the legal duties of a director."}</li>
+                  <li>{isId ? "Lengkapi data dan KYC/CDD direktur. Jika menggunakan nominee, catat status nominee dan data nominator untuk incorporation." : "Complete director details and KYC/CDD. Where a nominee is used, record nominee status and nominator details for incorporation."}</li>
+                </ul>
+                <p>{isId ? "Sumber ACRA: " : "ACRA sources: "}
+                  <a href="https://www.acra.gov.sg/news-events/news-announcements/balancing-director-accountability-with-sound-corporate-governance/" target="_blank" rel="noreferrer">resident director</a>{" · "}
+                  <a href="https://www.acra.gov.sg/register/business/registering-different-business-structures/local-company/appointing-company-directors-other-key-officers/" target="_blank" rel="noreferrer">{isId ? "direktur & nominee" : "directors & nominees"}</a>{" · "}
+                  <a href="https://www.acra.gov.sg/news-events/news-announcements/865/" target="_blank" rel="noreferrer">CSP & fit and proper</a>
+                </p>
+              </FlowNode>
+            </>}
             <FlowArrow />
             <FlowNode
               lang={lang}
