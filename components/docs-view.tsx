@@ -761,11 +761,12 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
             <FlowNode
               lang={lang}
               title={
-                isId
+                version === "1.2" ? (isId ? "Kontrak Layanan" : "Service Contract") : isId
                   ? "Klien mengisi form layanan SOAS"
                   : "Client Selects SOAS Service Package"
               }
             >
+              {version === "1.2" && <p>{isId ? "Klien memilih layanan yang dibutuhkan:" : "Let the client choose the required services:"}</p>}
               <ul>
                 <li>
                   <strong>Corporate secretarial</strong>{" "}
