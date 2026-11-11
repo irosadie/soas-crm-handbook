@@ -884,6 +884,21 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
                     {isId ? "Siapkan kontrak sesuai layanan yang dipilih. Pantau kontrak yang belum ditandatangani dan kirim pengingat. Perubahan layanan membutuhkan kontrak baru." : "Prepare the contract for the selected services. Track unsigned contracts and send reminders. Service changes require a new contract."}
                   </FlowNode>
                   <FlowArrow label={isId ? "Kontrak sudah ditandatangani" : "Contract signed"} />
+                  {version === "1.2" && <>
+                    <FlowNode id="onboarding-csp-client-list" lang={lang} title={isId ? "Tambahkan perusahaan ke daftar klien CSP SOAS" : "Add Company to SOAS CSP Client List"}>
+                      {isId ? "Untuk layanan filing, gunakan Maintain corporate service provider client list → Add client di Bizfile. Masukkan UEN perusahaan sebelum SOAS melakukan filing untuk klien." : "For filing services, use Maintain corporate service provider client list → Add client in Bizfile. Enter the company's UEN before SOAS files on the client's behalf."}
+                    </FlowNode>
+                    <FlowArrow />
+                    <FlowNode id="onboarding-filing-endorsement" lang={lang} title={isId ? "Klien melakukan endorsement akses filing SOAS" : "Client Endorses SOAS Filing Access"}>
+                      {isId ? "Minta klien melakukan endorsement permintaan di Bizfile. Pantau sampai akses filing SOAS aktif; jika masih tertunda, tindak lanjuti sebelum melakukan filing." : "Ask the client to endorse the request in Bizfile. Track it until SOAS filing access is active; follow up on pending endorsement before filing."}
+                    </FlowNode>
+                    <FlowArrow />
+                    <FlowNode id="onboarding-acra-updates" lang={lang} title={isId ? "Perbarui appointment & data perusahaan di ACRA — jika berubah" : "Update Company Appointments & Particulars — If Applicable"}>
+                      <p>{isId ? "Laporkan pengangkatan atau pemberhentian company secretary/pejabat perusahaan dan perubahan registered office jika ada. Untuk perusahaan lokal, laporkan dalam 14 hari sejak perubahan berlaku; simpan bukti filing dan data terbaru." : "File any appointment or cessation of the company secretary/officers and any registered office changes. For local companies, report these within 14 days of the effective change; retain filing confirmations and updated records."}</p>
+                      <p>{isId ? "Jika tidak ada perubahan, lewati filing perubahan data. Penambahan ke daftar klien CSP tidak otomatis mengganti secretary atau alamat perusahaan." : "If nothing changes, skip the particulars-change filing. Adding a CSP client does not automatically change the company secretary or registered office."}</p>
+                    </FlowNode>
+                    <FlowArrow />
+                  </>}
                   <FlowNode kind="end" lang={lang} title={isId ? "Resmi menjadi klien SOAS" : "Officially Onboarded as SOAS Client"} />
                 </Branch>
               </Branches>
@@ -891,6 +906,12 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
           </Flow>
         </div>
         <p>{isId ? "Catatan: papan sumber belum merinci tindak lanjut hasil KYC/KYB yang gagal. Jalur koreksi dan penolakan final di atas merupakan usulan penanganan operasional; kriteria keputusan perlu ditetapkan oleh tim SOAS." : "Note: the source board does not detail failed KYC/KYB handling. The correction and final-rejection paths above are proposed operational handling; SOAS must define the decision criteria."}</p>
+        {version === "1.2" && <p>
+          {isId ? "Rujukan ACRA untuk tahap Bizfile setelah kontrak: " : "ACRA references for the post-contract Bizfile steps: "}
+          <a href="https://www.acra.gov.sg/manage/corporate-service-providers/maintaining-client-lists-corporate-service-providers/" target="_blank" rel="noreferrer">{isId ? "daftar klien CSP & endorsement" : "CSP client list & endorsement"}</a>
+          {" · "}
+          <a href="https://www.acra.gov.sg/manage/companies/legal-requirements-common-offences/maintaining-local-companys-information-registers/updating-company-information-officers-shareholders/" target="_blank" rel="noreferrer">{isId ? "perubahan data & pejabat perusahaan" : "company particulars & officer changes"}</a>.
+        </p>}
       </section>
       ) : <DocsV11Onboarding lang={lang} />}
       {version === "1.1" && <DocsV11Contracts lang={lang} />}
