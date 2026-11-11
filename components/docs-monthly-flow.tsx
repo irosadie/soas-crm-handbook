@@ -48,7 +48,7 @@ export default function DocsMonthlyFlow({ lang, version = "1.0" }: { lang: DocsL
           </Branches>
           <FlowArrow />
           <FlowNode lang={lang} title={isId ? "E-Invoicing & konfirmasi pembayaran" : "E-Invoicing & Payment Confirmation"}>
-            {isId ? "Papan meminta pembayaran jasa sebelum pekerjaan dilanjutkan. Incorporation: jasa + ACRA fee + GST dibayar di muka. ART: terbitkan invoice bersama draf, kemudian pantau pembayaran sebelum melanjutkan layanan terkait." : "The board requires service payment before proceeding. Incorporation: collect service fee + ACRA fee + GST upfront. ART: issue the invoice with drafts, then track payment before proceeding with the related service."}
+            {version === "1.2" ? (isId ? "Incorporation: biaya jasa + biaya ACRA + biaya KYC/KYB wajib dilunasi sebelum filing ke ACRA. ART: terbitkan invoice bersama draf, kemudian pantau pembayaran sebelum melanjutkan layanan terkait." : "Incorporation: service fee + ACRA fee + KYC/KYB fee must be settled before filing with ACRA. ART: issue the invoice with drafts, then track payment before proceeding with the related service.") : (isId ? "Papan meminta pembayaran jasa sebelum pekerjaan dilanjutkan. Incorporation: jasa + ACRA fee + GST dibayar di muka. ART: terbitkan invoice bersama draf, kemudian pantau pembayaran sebelum melanjutkan layanan terkait." : "The board requires service payment before proceeding. Incorporation: collect service fee + ACRA fee + GST upfront. ART: issue the invoice with drafts, then track payment before proceeding with the related service.")}
           </FlowNode>
         </Flow>
       </div>

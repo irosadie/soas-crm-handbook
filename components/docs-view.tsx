@@ -517,7 +517,9 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
           id="h-incorporation"
         />
         <p>
-          {isId
+          {version === "1.2" ? (isId
+            ? "Kumpulkan informasi minimum, seperti jumlah director dan shareholder, untuk menentukan biaya. Informasi klien dikumpulkan melalui Communication Hub; data formulir lengkap disiapkan untuk pengajuan ACRA."
+            : "Collect minimum information, such as director and shareholder headcounts, to determine the fee. Gather client information through Communication Hub and prepare the complete form data for ACRA filing.") : isId
             ? "Mengumpulkan semua data untuk formulir incorporation ke ACRA. Informasi dari klien dikumpulkan lewat Communication Hub; alur percakapan dan tindak lanjut ada pada bagian Comm Hub & E-portal."
             : "Collecting all intake data for the ACRA incorporation application. Client information is gathered via Communication Hub; conversation and follow-up steps are detailed in Comm Hub & E-Portal."}
         </p>
@@ -532,14 +534,16 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
             <FlowNode
               lang={lang}
               title={
-                isId
+                version === "1.2" ? (isId ? "Kumpulkan informasi minimum untuk menentukan biaya" : "Collect Minimum Information to Determine Fees") : isId
                   ? "Kumpulkan data formulir incorporation ACRA"
                   : "Collect ACRA Incorporation Form Data"
               }
             >
               <ul>
                 <li>
-                  {isId
+                  {version === "1.2" ? (isId
+                    ? "Jumlah director dan shareholder untuk menentukan biaya."
+                    : "Director and shareholder headcounts to determine the fee.") : isId
                     ? "Jumlah shareholder & director (menentukan jumlah KYC)"
                     : "Shareholder & director headcounts (determines KYC volume)"}
                 </li>
@@ -556,12 +560,16 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
             >
               <ul>
                 <li>
-                  {isId
+                  {version === "1.2" ? (isId
+                    ? "Biaya jasa + biaya ACRA + biaya KYC/KYB"
+                    : "Service fee + ACRA fee + KYC/KYB fee") : isId
                     ? "Biaya jasa + ACRA fee + GST"
                     : "Professional service fee + ACRA fee + GST"}
                 </li>
                 <li>
-                  {isId
+                  {version === "1.2" ? (isId
+                    ? "Klien wajib melunasi pembayaran sebelum filing ke ACRA."
+                    : "Client must settle payment before filing with ACRA.") : isId
                     ? "Klien wajib bayar sebelum incorporation dimulai"
                     : "Client must settle payment before filing begins"}
                 </li>
