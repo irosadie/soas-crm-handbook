@@ -630,6 +630,21 @@
   white-space: nowrap;
 }
 
+.dfb-merge > .dfb-col > .dfb-label {
+  position: relative;
+}
+
+.dfb-merge > .dfb-col > .dfb-label::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: calc(50% - 1px);
+  width: 2px;
+  height: 10px;
+  background: var(--d-line);
+  pointer-events: none;
+}
+
 .dfb-col > .dfb {
   margin-top: 0;
 }
