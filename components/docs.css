@@ -979,6 +979,8 @@
 .docs-meeting-source { margin-top: -6px; color: var(--d-muted); font-size: 11px; }
 .docs-v11-step { display: flex; width: 100%; flex-direction: column; align-items: center; }
 .docs-record-model { margin: 0 0 30px; }
+.docs-filing-note { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--d-border); }
+.docs-filing-note > strong { display: block; margin-bottom: 5px; color: var(--d-brand); }
 @media (max-width: 640px) {
   .docs-header-identity { width: 100%; justify-content: space-between; gap: 8px; }
   .docs-header-identity .docs-header-brand { width: auto; }

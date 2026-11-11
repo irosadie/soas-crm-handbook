@@ -684,7 +684,13 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
                   : "Submit Application to ACRA through corpora8e"
               }
             >
-              {isId ? "Jika pengajuan online tidak tersedia, siapkan data dan serahkan ke SOAS untuk pengajuan manual. Tetap pantau hasil pengajuan." : "If online submission is unavailable, prepare the data and hand it to SOAS for manual filing. Continue tracking the filing outcome."}
+              {version === "1.2" ? <>
+                <p>{isId ? "Biaya pengajuan wajib dibayar ke ACRA." : "The filing fee must be paid to ACRA."}</p>
+                <div className="docs-filing-note" role="note">
+                  <strong>{isId ? "Catatan:" : "Note:"}</strong>
+                  <p>{isId ? "Jika pengajuan online tidak tersedia, siapkan data dan serahkan ke SOAS untuk pengajuan manual. Tetap pantau hasil pengajuan." : "If online submission is unavailable, prepare the data and hand it to SOAS for manual filing. Continue tracking the filing outcome."}</p>
+                </div>
+              </> : (isId ? "Jika pengajuan online tidak tersedia, siapkan data dan serahkan ke SOAS untuk pengajuan manual. Tetap pantau hasil pengajuan." : "If online submission is unavailable, prepare the data and hand it to SOAS for manual filing. Continue tracking the filing outcome.")}
             </FlowNode>
             <FlowArrow />
             <FlowNode
