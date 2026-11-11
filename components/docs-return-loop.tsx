@@ -20,22 +20,54 @@ export default function DocsReturnLoop({
 
   useEffect(() => {
     const root = rootRef.current;
-    const from = document.getElementById(fromId);
-    const to = document.getElementById(toId);
-    if (!root || !from || !to) return;
+    if (!root) return;
+    let frame = 0;
 
-    const observer = new ResizeObserver(() => {
+    const updatePath = () => {
+      // Resolve within this loop each time: React can replace a node with the same ID.
+      const from = root.querySelector<HTMLElement>(`#${CSS.escape(fromId)}`);
+      const to = root.querySelector<HTMLElement>(`#${CSS.escape(toId)}`);
+      if (!from || !to) {
+        setPath("");
+        return;
+      }
       const bounds = root.getBoundingClientRect();
       const start = from.getBoundingClientRect();
       const end = to.getBoundingClientRect();
+      if (!start.width || !start.height || !end.width || !end.height) {
+        setPath("");
+        return;
+      }
       const startX = start.left - bounds.left;
       const startY = start.top - bounds.top + start.height / 2;
       const endX = end.left - bounds.left;
       const endY = end.top - bounds.top + end.height / 2;
       setPath(`M ${startX} ${startY} H 8 V ${endY} H ${endX}`);
-    });
-    for (const element of [root, from, to]) observer.observe(element);
-    return () => observer.disconnect();
+    };
+    const scheduleUpdate = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(updatePath);
+    };
+    const observer = new ResizeObserver(scheduleUpdate);
+    const observeCurrentNodes = () => {
+      observer.disconnect();
+      observer.observe(root);
+      for (const id of [fromId, toId]) {
+        const node = root.querySelector<HTMLElement>(`#${CSS.escape(id)}`);
+        if (node) observer.observe(node);
+      }
+      scheduleUpdate();
+    };
+    const mutations = new MutationObserver(observeCurrentNodes);
+    mutations.observe(root, { childList: true, subtree: true, characterData: true });
+    observeCurrentNodes();
+    window.addEventListener("resize", scheduleUpdate);
+    return () => {
+      observer.disconnect();
+      mutations.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", scheduleUpdate);
+    };
   }, [fromId, toId]);
 
   return (
