@@ -969,7 +969,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
         </h3>
         <div className="docs-canvas">
           <Flow label={isId ? "Status klien" : "Client lifecycle status"}>
-            <FlowNode kind="store" lang={lang} title={isId ? "Klien" : "Client Record"} />
+            <FlowNode kind="store" lang={lang} title={version === "1.2" ? "Client Database" : (isId ? "Klien" : "Client Record")} />
             <FlowArrow />
             <FlowNode kind="decision" lang={lang} title={isId ? "Status?" : "Status?"} />
             <FlowArrow plain />
