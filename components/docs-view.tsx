@@ -35,6 +35,7 @@ import DocsCommunicationFlow from "@/components/docs-communication-flow";
 import DocsGlobalSearch from "@/components/docs-global-search";
 import DocsReturnLoop from "@/components/docs-return-loop";
 import DocsWipFlow from "@/components/docs-wip-flow";
+import DocsManagementReport from "@/components/docs-management-report";
 import { DocsGlossary, DocsRules, ReferenceLinks } from "@/components/docs-reference";
 import "@/components/docs.css";
 
@@ -173,7 +174,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
   const isId = lang === "id";
   const isV11 = version === "1.1";
   const sections = useMemo(() => {
-    if (version === "1.2") return navSections[lang].flatMap(section => section.id === "onboarding" ? [section, { id: "work-in-progress", label: isId ? "WIP & follow-up" : "WIP & Follow-up" }] : [section]);
+    if (version === "1.2") return navSections[lang].flatMap(section => section.id === "onboarding" ? [section, { id: "work-in-progress", label: isId ? "WIP & follow-up" : "WIP & Follow-up" }, { id: "monthly-management-report", label: "Monthly Report" }] : [section]);
     if (!isV11) return navSections[lang];
     return navSections[lang].flatMap(section => {
       if (section.id === "incorporation") return [section, { id: "identity-screening", label: isId ? "Identitas & screening" : "Identity & Screening" }];
@@ -919,6 +920,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
       ) : <DocsV11Onboarding lang={lang} />}
       {version === "1.1" && <DocsV11Contracts lang={lang} />}
       {version === "1.2" && <DocsWipFlow lang={lang} />}
+      {version === "1.2" && <DocsManagementReport lang={lang} />}
 
       {/* ------------------------------------------------------------------ */}
       <section className="docs-section" id="client-database" aria-labelledby="h-client-database">
