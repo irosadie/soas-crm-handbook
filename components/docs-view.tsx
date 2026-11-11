@@ -685,8 +685,8 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
                 </li>
                 <li>
                   {isId
-                    ? "IPPC (istilah sesuai papan)"
-                    : "IPPC (undefined term on the board)"}
+                    ? "IPPC (Internal Policies, Procedures and Controls Policy — kebijakan kepatuhan AML/CFT internal CSP/SOAS)"
+                    : "IPPC (Internal Policies, Procedures and Controls Policy — internal AML/CFT compliance policy for CSP/SOAS)"}
                 </li>
               </ul>
             </FlowNode>
@@ -1367,11 +1367,11 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
           <li>
             {isId ? (
               <>
-                Istilah <em>“IPPC”</em> dan <em>“Who automate controller”</em> tidak dijelaskan.
+                Istilah <em>“IPPC”</em> mengacu pada <strong>Internal Policies, Procedures and Controls Policy</strong> (kebijakan pengendalian internal kepatuhan AML/CFT untuk CSP/SOAS). Frasa <em>“Who automate controller”</em> masih perlu konfirmasi lebih lanjut.
               </>
             ) : (
               <>
-                The acronym <em>“IPPC”</em> and the phrase <em>“Who automate controller”</em> are left undefined on the canvas.
+                The acronym <em>“IPPC”</em> refers to <strong>Internal Policies, Procedures and Controls Policy</strong> (internal AML/CFT compliance policy for CSPs/SOAS). The phrase <em>“Who automate controller”</em> remains open for confirmation.
               </>
             )}
           </li>
