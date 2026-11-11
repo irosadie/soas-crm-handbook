@@ -593,13 +593,16 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             </FlowNode>
             <FlowArrow />
             <FlowNode
-              kind="decision"
+              id={version === "1.1" ? "incorporation-party-details" : undefined}
+              kind={version === "1.1" ? "process" : "decision"}
               lang={lang}
-              title={isId ? "Tipe shareholder?" : "Shareholder Type?"}
-            />
+              title={version === "1.1" ? (isId ? "Kumpulkan data director & shareholder" : "Collect Director & Shareholder Details") : (isId ? "Tipe shareholder?" : "Shareholder Type?")}
+            >
+              {version === "1.1" && <p>{isId ? "Kumpulkan identitas setiap director (termasuk nominee director) dan shareholder individu. Lengkapi jalur corporate shareholder jika ada. Jika orang yang sama merangkap peran, tautkan semua perannya ke satu identitas." : "Collect identity details for every director (including nominee directors) and individual shareholder. Complete the corporate shareholder branch where applicable. If one person holds multiple roles, link all their roles to a single identity."}</p>}
+            </FlowNode>
             <FlowArrow plain />
             <Branches mergeToNext>
-              <Branch mergeTail label={isId ? "Individual" : "Individual"}>
+              <Branch mergeTail label={version === "1.1" ? (isId ? "Director & shareholder individu" : "Directors & Individual Shareholders") : "Individual"}>
                 <Branches mergeToNext>
                   <Branch mergeTail label={isId ? "Singaporean / resident" : "Singaporean / Resident"}>
                     <FlowNode
@@ -621,7 +624,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
                   </Branch>
                 </Branches>
               </Branch>
-              <Branch mergeTail label={isId ? "Corporate" : "Corporate"}>
+              <Branch mergeTail label={version === "1.1" ? (isId ? "Shareholder korporasi (jika ada)" : "Corporate Shareholders (if any)") : "Corporate"}>
                 <Branches mergeToNext>
                   <Branch mergeTail label={isId ? "Perusahaan Singapura" : "Singapore Entity"}>
                     <FlowNode
@@ -653,7 +656,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
                 {version === "1.1" && <>
                   <FlowArrow />
                   <FlowNode id="corporate-representative" kind="note" lang={lang} title={isId ? "Wakil perusahaan (individu)" : "Corporate Representative (Individual)"}>
-                    <p>{isId ? "Wakil individu dari corporate shareholder mengikuti persyaratan jalur Individual: data pribadi, NRIC/FIN atau passport, serta bukti alamat bila diperlukan. Wakil juga mengikuti KYC/CDD." : "An individual representing a corporate shareholder follows the Individual branch: personal details, NRIC/FIN or passport, and proof of address where applicable. The representative also undergoes KYC/CDD."}</p>
+                    <p>{isId ? "Wakil individu dari corporate shareholder mengikuti jalur data individu yang sama dengan director dan shareholder individu: data pribadi, NRIC/FIN atau passport, serta bukti alamat bila diperlukan. Wakil juga mengikuti KYC/CDD." : "An individual representing a corporate shareholder follows the same identity-data path as directors and individual shareholders: personal details, NRIC/FIN or passport, and proof of address where applicable. The representative also undergoes KYC/CDD."}</p>
                   </FlowNode>
                 </>}
               </Branch>
@@ -669,9 +672,11 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             >
               <ul>
                 <li>
-                  {isId
+                  {version === "1.1" ? (isId
+                    ? "Mencakup director (termasuk nominee), shareholder individu, serta wakil dan individu terkait corporate shareholder."
+                    : "Covers directors (including nominees), individual shareholders, and representatives and relevant individuals behind corporate shareholders.") : (isId
                     ? "Berlaku juga untuk individu di balik corporate shareholder"
-                    : "Applies also to individuals behind corporate shareholders"}
+                    : "Applies also to individuals behind corporate shareholders")}
                 </li>
                 <li>
                   {isId
