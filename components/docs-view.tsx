@@ -505,7 +505,12 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
               </Branch>
             </Branches>
             {version === "1.1" && <FlowNode id="lead-monthly-report-note" kind="note" lang={lang} title={isId ? "Catatan — Monthly Report" : "Note — Monthly Report"}>
-              <p>{isId ? "Data leads dirangkum menjadi Monthly Report (digenerate secara otomatis): jumlah lead, incorporation, onboarding, WIP dan rejected, termasuk WIP yang dibawa dari bulan sebelumnya." : "Lead data is compiled into the Monthly Report (automatically generated): lead counts, incorporations, onboardings, WIP and rejected leads, including WIP carried forward from the previous month."}</p>
+              <p>{isId ? "Data leads dirangkum menjadi Monthly Report (digenerate secara otomatis), dengan highlight jumlah:" : "Lead data is compiled into the Monthly Report (automatically generated), highlighting the number of:"}</p>
+              <ul>
+                <li><strong>Success:</strong> {isId ? "berapa yang berhasil Onboarding dan berapa yang berhasil Incorporation, ditampilkan terpisah." : "successful Onboardings and successful Incorporations, shown separately."}</li>
+                <li><strong>WIP:</strong> {isId ? "berapa yang masih diproses, termasuk WIP dari bulan sebelumnya." : "leads still in progress, including WIP carried forward from the previous month."}</li>
+                <li><strong>Rejected:</strong> {isId ? "berapa lead yang ditolak." : "rejected leads."}</li>
+              </ul>
               <a href="#monthly-management-report">{isId ? "Lihat Monthly Report →" : "View Monthly Report →"}</a>
             </FlowNode>}
           </Flow>
