@@ -548,9 +548,19 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
                     : "Shareholder & director headcounts (determines KYC volume)"}
                 </li>
                 {version === "1.1" && <li>{isId ? "Jumlah shareholder korporasi." : "Number of corporate shareholders."}</li>}
+                {version === "1.1" && <li>{isId ? "Tanyakan pilihan constitution: Model Constitution ACRA atau Customised Constitution." : "Ask whether the client wants ACRA's Model Constitution or a Customised Constitution."}</li>}
               </ul>
             </FlowNode>
             {version === "1.1" && <>
+              <FlowArrow />
+              <FlowNode id="incorporation-constitution" lang={lang} title={isId ? "Konfirmasi pilihan constitution dengan klien" : "Confirm the Constitution Choice with the Client"}>
+                <ul>
+                  <li>{isId ? "Model Constitution: gunakan model yang disediakan ACRA jika sesuai dengan kebutuhan tata kelola dan tipe perusahaan." : "Model Constitution: adopt ACRA's model where it suits the company's governance needs and company type."}</li>
+                  <li>{isId ? "Customised Constitution: minta dokumen yang sudah dimiliki klien atau konfirmasi aturan khusus yang perlu disusun dan direview. Sepakati cakupan drafting/review serta biayanya sebelum melanjutkan." : "Customised Constitution: request the client's existing document or confirm the specific provisions to be drafted and reviewed. Agree the drafting/review scope and fees before proceeding."}</li>
+                </ul>
+                <p>{isId ? "Pilihan mengikuti kebutuhan dan tipe perusahaan; tidak otomatis ditentukan oleh besar-kecilnya perusahaan. Catat pilihan dan persetujuan klien sejak intake." : "The choice depends on the company's needs and type; company size alone does not determine it. Record the client's choice and agreement during intake."}</p>
+                <p>{isId ? "Sumber: " : "Source: "}<a href="https://www.acra.gov.sg/register/business/registering-different-business-structures/local-company/company-constitution/" target="_blank" rel="noreferrer">{isId ? "panduan constitution ACRA" : "ACRA constitution guide"}</a></p>
+              </FlowNode>
               <FlowArrow />
               <FlowNode id="incorporation-resident-director" lang={lang} title={isId ? "Pastikan resident director & kebutuhan nominee" : "Confirm Resident Director & Nominee Requirements"}>
                 <ul>
@@ -696,6 +706,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
               <FlowNode id="incorporation-signature-bundle" lang={lang} title={isId ? "Bundel dokumen tanda tangan" : "Bundle Documents for Signature"}>
                 <ul>
                   <li>{isId ? "Siapkan dokumen incorporation dan draf First Director Meeting pada tahap yang sesuai." : "Prepare incorporation documents and First Director Meeting drafts at the appropriate stage."}</li>
+                  <li>{isId ? "Finalkan constitution yang dipilih dan minta persetujuan klien sebelum filing. Semua subscriber menandatangani salinan constitution saat incorporation; simpan salinan bertanda tangan di registered office." : "Finalise the selected constitution and obtain client approval before filing. All subscribers sign a copy of the constitution at incorporation; keep the signed copy at the registered office."}</li>
                   <li>{isId ? "Gabungkan dokumen yang siap ditandatangani agar tidak bolak-balik meminta tanda tangan." : "Bundle documents ready for signing to avoid repeated signature requests."}</li>
                   <li>{isId ? "SOAS juga review dan countersign kontrak layanan." : "SOAS also reviews and countersigns the service contract."}</li>
                 </ul>
@@ -717,10 +728,13 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
               }
             >
               {version === "1.1" ? (
+                <>
+                <p>{isId ? "Pilih Model Constitution yang disepakati atau upload Customised Constitution final pada pengajuan Bizfile." : "Select the agreed Model Constitution or upload the final Customised Constitution in the Bizfile application."} <a href="https://www.acra.gov.sg/register/business/registering-different-business-structures/local-company/registering-via-bizfile/" target="_blank" rel="noreferrer">{isId ? "Panduan ACRA" : "ACRA guide"}</a></p>
                 <div className="docs-filing-note" role="note">
                   <strong>{isId ? "Catatan:" : "Note:"}</strong>
                   <p>{isId ? "Jika pengajuan online tidak tersedia, siapkan data dan serahkan ke SOAS untuk pengajuan manual. Tetap pantau hasil pengajuan." : "If online submission is unavailable, prepare the data and hand it to SOAS for manual filing. Continue tracking the filing outcome."}</p>
                 </div>
+                </>
               ) : (isId ? "Jika pengajuan online tidak tersedia, siapkan data dan serahkan ke SOAS untuk pengajuan manual. Tetap pantau hasil pengajuan." : "If online submission is unavailable, prepare the data and hand it to SOAS for manual filing. Continue tracking the filing outcome.")}
             </FlowNode>
             <FlowArrow />
