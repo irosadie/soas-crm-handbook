@@ -870,7 +870,13 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
                   </FlowNode>
                 </Branch>
                 <Branch label={isId ? "Disetujui" : "Approved"}>
-                  <FlowNode lang={lang} title={isId ? "Pilih layanan SOAS" : "Select SOAS Services"}>
+                  {version === "1.2" && <>
+                    <FlowNode id="onboarding-csp-handover" lang={lang} title={isId ? "Kumpulkan seluruh dokumen dari CSP sebelumnya" : "Get All Documents from Previous CSP"}>
+                      {isId ? "Minta dan kumpulkan seluruh dokumen serta catatan perusahaan yang disimpan CSP sebelumnya, dalam bentuk digital maupun fisik." : "Request and collect all company documents and records held by the previous CSP, in digital or physical form."}
+                    </FlowNode>
+                    <FlowArrow />
+                  </>}
+                  <FlowNode lang={lang} title={version === "1.2" ? (isId ? "Kontrak Layanan" : "Service Contract") : (isId ? "Pilih layanan SOAS" : "Select SOAS Services")}>
                     {isId ? "Pilih paket atau item Corporate Secretarial / ART. Layanan di luar kontrak ditagih terpisah sebagai ad hoc." : "Select Corporate Secretarial / ART packages or individual items. Out-of-contract services are billed separately as ad hoc."}
                   </FlowNode>
                   <FlowArrow />
