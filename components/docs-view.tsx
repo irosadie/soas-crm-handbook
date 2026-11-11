@@ -929,7 +929,32 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
                 </Branch>
                 <Branch label={isId ? "Disetujui" : "Approved"}>
                   <FlowNode lang={lang} title={version === "1.1" ? (isId ? "Kontrak Layanan" : "Service Contract") : (isId ? "Pilih layanan SOAS" : "Select SOAS Services")}>
-                    {isId ? "Pilih paket atau item Corporate Secretarial / ART. Layanan di luar kontrak ditagih terpisah sebagai ad hoc." : "Select Corporate Secretarial / ART packages or individual items. Out-of-contract services are billed separately as ad hoc."}
+                    {version === "1.1" ? (
+                      <>
+                        <p>{isId ? "Klien memilih layanan yang dibutuhkan:" : "Let the client choose the required services:"}</p>
+                        <ul>
+                          <li>
+                            <strong>Corporate secretarial</strong>{" "}
+                            {isId ? "(paket / item):" : "(package / item):"}{" "}
+                            Company Secretary, Nominee Director, Nominee Shareholder, RORC, Registered address
+                          </li>
+                          <li>
+                            <strong>ART</strong> (Account, Report, Tax):{" "}
+                            {isId ? "paket / item" : "modular package / individual items"}
+                          </li>
+                          <li>
+                            <strong>Ad hoc</strong>:{" "}
+                            {isId
+                              ? "Di luar layanan corporate secretarial / ART; mis. beli Business Profile dari ACRA, ubah company particulars"
+                              : "Outside corporate secretarial / ART services; e.g. purchase ACRA Business Profile, update company particulars"}
+                          </li>
+                        </ul>
+                      </>
+                    ) : (
+                      isId
+                        ? "Pilih paket atau item Corporate Secretarial / ART. Layanan di luar kontrak ditagih terpisah sebagai ad hoc."
+                        : "Select Corporate Secretarial / ART packages or individual items. Out-of-contract services are billed separately as ad hoc."
+                    )}
                   </FlowNode>
                   <FlowArrow />
                   <FlowNode lang={lang} title={isId ? "Tanda tangan kontrak layanan" : "Sign Service Contract"}>
