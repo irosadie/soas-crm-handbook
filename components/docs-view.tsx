@@ -670,6 +670,16 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
               </ul>
             </FlowNode>
             <FlowArrow />
+            {version === "1.2" && <>
+              <FlowNode id="incorporation-signature-bundle" lang={lang} title={isId ? "Bundel dokumen tanda tangan" : "Bundle Documents for Signature"}>
+                <ul>
+                  <li>{isId ? "Siapkan dokumen incorporation dan draf First Director Meeting pada tahap yang sesuai." : "Prepare incorporation documents and First Director Meeting drafts at the appropriate stage."}</li>
+                  <li>{isId ? "Gabungkan dokumen yang siap ditandatangani agar tidak bolak-balik meminta tanda tangan." : "Bundle documents ready for signing to avoid repeated signature requests."}</li>
+                  <li>{isId ? "SOAS juga review dan countersign kontrak layanan." : "SOAS also reviews and countersigns the service contract."}</li>
+                </ul>
+              </FlowNode>
+              <FlowArrow />
+            </>}
             <DocsReturnLoop
               fromId="acra-revision-consent"
               toId="incorporation-submit"
