@@ -430,7 +430,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             <FlowArrow />
             <FlowNode kind="store" lang={lang} title={version === "1.1" ? "Leads (listing)" : "Leads"}>
               <p>{isId ? "Simpan detail lead & statusnya." : "Store lead details & pipeline status."}</p>
-              {version === "1.1" && <p>{isId ? "Staf harus segera merespons, paling lambat 1 hari sejak lead diterima, menggunakan template yang disediakan." : "Staff must respond promptly, within 1 day of receiving the lead, using the provided template."}</p>}
+              {version === "1.1" && <p>{isId ? "Staf harus segera merespons, paling lambat 1 hari sejak lead diterima, menggunakan template yang disediakan (sesuai jenis lead)." : "Staff must respond promptly, within 1 day of receiving the lead, using the provided template (depending on the lead type)."}</p>}
             </FlowNode>
             <FlowArrow />
             <FlowNode kind="decision" lang={lang} title={isId ? "Jenis layanan & progres lead" : "Service Type & Lead Progress"}>
