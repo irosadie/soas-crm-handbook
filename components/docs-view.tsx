@@ -504,7 +504,10 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
                 />
               </Branch>
             </Branches>
-
+            {version === "1.1" && <FlowNode id="lead-monthly-report-note" kind="note" lang={lang} title={isId ? "Catatan — Monthly Report" : "Note — Monthly Report"}>
+              <p>{isId ? "Data leads dirangkum menjadi Monthly Report: jumlah lead, incorporation, onboarding, WIP dan rejected, termasuk WIP yang dibawa dari bulan sebelumnya." : "Lead data is compiled into the Monthly Report: lead counts, incorporations, onboardings, WIP and rejected leads, including WIP carried forward from the previous month."}</p>
+              <a href="#monthly-management-report">{isId ? "Lihat Monthly Report →" : "View Monthly Report →"}</a>
+            </FlowNode>}
           </Flow>
         </div>
       </section>

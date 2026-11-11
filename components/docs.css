@@ -451,14 +451,21 @@
   color: #92372d;
 }
 
-#incorporation-rejection-note {
+#incorporation-rejection-note,
+#lead-monthly-report-note {
   border-color: #c77728;
   background: #fff3e5;
   color: #85430f;
 }
 
-#incorporation-rejection-note .dfn-body {
+#incorporation-rejection-note .dfn-body,
+#lead-monthly-report-note .dfn-body {
   color: inherit;
+}
+
+#lead-monthly-report-note {
+  width: min(100%, 520px);
+  margin-top: 20px;
 }
 
 .dfn-decision {
@@ -990,7 +997,8 @@
 .docs-shell[data-theme="dark"] .dfn-store { background: #1c3648; }
 .docs-shell[data-theme="dark"] .dfn-external { border-color: #bc944b; background: #3a3020; }
 .docs-shell[data-theme="dark"] .dfn-note { border-color: #9f914c; background: #37321c; color: #eddfa4; }
-.docs-shell[data-theme="dark"] #incorporation-rejection-note { border-color: #ca873e; background: #402a16; color: #f6d3a3; }
+.docs-shell[data-theme="dark"] #incorporation-rejection-note,
+.docs-shell[data-theme="dark"] #lead-monthly-report-note { border-color: #ca873e; background: #402a16; color: #f6d3a3; }
 .docs-shell[data-theme="dark"] .dfh-step.is-deadline { border-color: #d39163; background: #3c2a20; }
 .docs-shell[data-theme="dark"] .is-deadline .dfh-time { color: #f0b58c; }
 .docs-shell[data-theme="dark"] .df-return-connector { color: #ed988c; }
