@@ -816,6 +816,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
                 </li>
                 <li>
                   <strong>Ad hoc</strong>:{" "}
+                  {version === "1.1" && (isId ? "Di luar layanan corporate secretarial / ART; " : "Outside corporate secretarial / ART services; ")}
                   {isId
                     ? "mis. beli Business Profile dari ACRA, ubah company particulars"
                     : "e.g. purchase ACRA Business Profile, update company particulars"}
