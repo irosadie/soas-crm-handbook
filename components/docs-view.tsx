@@ -747,7 +747,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
               }
             >
               <ul>
-                <li>First Director meeting</li>
+                {version !== "1.2" && <li>First Director meeting</li>}
                 <li>
                   {version === "1.2" ? (isId
                     ? "Kirim Business Profile, Constitution & dokumen Director Meeting"
