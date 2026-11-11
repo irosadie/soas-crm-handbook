@@ -1,9 +1,15 @@
-import { Suspense } from "react";
-import type { Metadata } from "next";
-import DocsView from "@/components/docs-view";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = { title: "CRM Handbook · v1.2" };
-
-export default function VersionedDocsPage() {
-  return <main className="docs-standalone" aria-label="CRM Handbook v1.2"><Suspense fallback={<p>Loading handbook…</p>}><DocsView version="1.2" /></Suspense></main>;
+export default async function PreviousVersionPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const query = new URLSearchParams();
+  for (const [key, value] of Object.entries(await searchParams)) {
+    for (const item of Array.isArray(value) ? value : value === undefined ? [] : [value]) {
+      query.append(key, item);
+    }
+  }
+  redirect(`/docs/v1.1${query.size ? `?${query}` : ""}`);
 }

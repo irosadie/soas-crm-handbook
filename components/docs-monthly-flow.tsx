@@ -1,7 +1,7 @@
 import { CalendarClock } from "lucide-react";
 import { Branch, Branches, Flow, FlowArrow, FlowNode, type DocsLang } from "@/components/docs-flow";
 
-export default function DocsMonthlyFlow({ lang, version = "1.0" }: { lang: DocsLang; version?: "1.0" | "1.1" | "1.2" }) {
+export default function DocsMonthlyFlow({ lang, version = "1.0" }: { lang: DocsLang; version?: "1.0" | "1.1" }) {
   const isId = lang === "id";
   const reports = [
     ["A", "Pengumpulan dokumen", "Document Collection", "Daftar klien yang harus dinotifikasi, jumlah sudah dinotifikasi, dokumen lengkap dan outstanding. Notice segera setelah FYE, permintaan dokumen bulanan dan reminder mingguan melalui Comm Hub sampai staf mengambil alih lewat telepon; catat hasil follow-up di percakapan terkait. Pantau kesiapan akun dan ECI dalam 3 bulan setelah FYE jika wajib filing; cek waiver ECI.", "List clients requiring notice, notified counts, complete and outstanding documents. Send notice immediately after FYE, request documents monthly, and remind weekly through Comm Hub until staff take over by phone; record follow-up outcomes in the related conversation. Track accounts and ECI readiness within 3 months after FYE where filing is required; check ECI waivers."],
@@ -22,11 +22,10 @@ export default function DocsMonthlyFlow({ lang, version = "1.0" }: { lang: DocsL
         {reports.map(([key, idTitle, enTitle, idBody, enBody]) => (
           <div className="docs-card" key={key}>
             <h3>{key}. {isId ? idTitle : enTitle}</h3>
-            <p>{key === "E" && version === "1.1" ? (isId ? "Tautkan invoice ke kontrak, item layanan dan periode monthly/quarterly/annual yang disepakati. Trigger pengiriman draf/deliverable dan syarat pembayaran mengikuti kontrak. Corporate Secretarial tetap ditagih tahunan secara berulang; ad hoc ditagih terpisah. Pantau hasil collection, bukan hanya invoice dibuat." : "Link invoices to the contract, service item and agreed monthly/quarterly/annual period. Draft/deliverable dispatch triggers and payment terms follow the contract. Corporate Secretarial remains annually recurring; ad hoc is invoiced separately. Track collection outcomes, not just invoice creation.") : (isId ? idBody : enBody)}</p>
+            <p>{isId ? idBody : enBody}</p>
           </div>
         ))}
       </div>
-      {version === "1.1" && <p><a href="#service-contracts">{isId ? "Matriks kontrak: pekerjaan bulanan/kuartalan, GST yang berlaku dan output tahunan →" : "Contract matrix: monthly/quarterly work, applicable GST and annual outputs →"}</a></p>}
       <h3>{isId ? "Kontrol pembayaran & perubahan kontrak" : "Payment & Contract Change Controls"}</h3>
       <div className="docs-canvas">
         <Flow label={isId ? "Kontrol layanan dan pembayaran" : "Service and payment controls"}>
@@ -48,7 +47,7 @@ export default function DocsMonthlyFlow({ lang, version = "1.0" }: { lang: DocsL
           </Branches>
           <FlowArrow />
           <FlowNode lang={lang} title={isId ? "E-Invoicing & konfirmasi pembayaran" : "E-Invoicing & Payment Confirmation"}>
-            {version === "1.2" ? (isId ? "Incorporation: biaya jasa + biaya ACRA + biaya KYC/KYB wajib dilunasi sebelum filing ke ACRA. ART: terbitkan invoice bersama draf, kemudian pantau pembayaran sebelum melanjutkan layanan terkait." : "Incorporation: service fee + ACRA fee + KYC/KYB fee must be settled before filing with ACRA. ART: issue the invoice with drafts, then track payment before proceeding with the related service.") : (isId ? "Papan meminta pembayaran jasa sebelum pekerjaan dilanjutkan. Incorporation: jasa + ACRA fee + GST dibayar di muka. ART: terbitkan invoice bersama draf, kemudian pantau pembayaran sebelum melanjutkan layanan terkait." : "The board requires service payment before proceeding. Incorporation: collect service fee + ACRA fee + GST upfront. ART: issue the invoice with drafts, then track payment before proceeding with the related service.")}
+            {version === "1.1" ? (isId ? "Incorporation: biaya jasa + biaya ACRA + biaya KYC/KYB wajib dilunasi sebelum filing ke ACRA. ART: terbitkan invoice bersama draf, kemudian pantau pembayaran sebelum melanjutkan layanan terkait." : "Incorporation: service fee + ACRA fee + KYC/KYB fee must be settled before filing with ACRA. ART: issue the invoice with drafts, then track payment before proceeding with the related service.") : (isId ? "Papan meminta pembayaran jasa sebelum pekerjaan dilanjutkan. Incorporation: jasa + ACRA fee + GST dibayar di muka. ART: terbitkan invoice bersama draf, kemudian pantau pembayaran sebelum melanjutkan layanan terkait." : "The board requires service payment before proceeding. Incorporation: collect service fee + ACRA fee + GST upfront. ART: issue the invoice with drafts, then track payment before proceeding with the related service.")}
           </FlowNode>
         </Flow>
       </div>

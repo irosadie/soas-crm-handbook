@@ -28,7 +28,6 @@ import {
   HFlow,
   HStep,
 } from "@/components/docs-flow";
-import { DocsV11Overview, DocsV11LeadFlow, DocsV11Incorporation, DocsV11Screening, DocsV11Onboarding, DocsV11Contracts, DocsV11LeadReport, DocsV11RecordModel, DocsV11OpenNotes } from "@/components/docs-v11-flows";
 import DocsMonthlyFlow from "@/components/docs-monthly-flow";
 import DocsFyeAlerts from "@/components/docs-fye-alerts";
 import DocsCommunicationFlow from "@/components/docs-communication-flow";
@@ -131,7 +130,7 @@ function readSavedTheme(): DocsTheme {
   }
 }
 
-export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" | "1.2" }) {
+export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" }) {
   const router = useRouter();
   const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
   const [selectedLang, setLang] = useState<DocsLang | null>(null);
@@ -172,19 +171,13 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
   };
 
   const isId = lang === "id";
-  const isV11 = version === "1.1";
   const sections = useMemo(() => {
-    if (version === "1.2") return navSections[lang].flatMap(section => section.id === "onboarding" ? [section, { id: "work-in-progress", label: isId ? "WIP & follow-up" : "WIP & Follow-up" }, { id: "monthly-management-report", label: "Monthly Report" }] : [section]);
-    if (!isV11) return navSections[lang];
-    return navSections[lang].flatMap(section => {
-      if (section.id === "incorporation") return [section, { id: "identity-screening", label: isId ? "Identitas & screening" : "Identity & Screening" }];
-      if (section.id === "onboarding") return [section, { id: "service-contracts", label: isId ? "Layanan & kontrak" : "Services & Contracts" }];
-      return [section];
-    });
-  }, [lang, isId, isV11, version]);
+    if (version === "1.1") return navSections[lang].flatMap(section => section.id === "onboarding" ? [section, { id: "work-in-progress", label: isId ? "WIP & follow-up" : "WIP & Follow-up" }, { id: "monthly-management-report", label: "Monthly Report" }] : [section]);
+    return navSections[lang];
+  }, [lang, isId, version]);
 
   const handleSetVersion = (next: string) => {
-    if (next !== "1.0" && next !== "1.1" && next !== "1.2") return;
+    if (next !== "1.0" && next !== "1.1") return;
     const hash = window.location.hash;
     const sharedAnchor = navSections.id.some(section => hash === `#${section.id}` || hash === `#h-${section.id}`) || hash.startsWith("#glossary-");
     router.push(`/docs/v${next}${window.location.search}${sharedAnchor ? hash : "#overview"}`);
@@ -225,8 +218,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
             <label className="docs-version-control">
               <span className="sr-only">{isId ? "Versi panduan" : "Handbook version"}</span>
               <select aria-label={isId ? "Versi panduan" : "Handbook version"} value={version} onChange={event => handleSetVersion(event.target.value)}>
-                <option value="1.2">v1.2 · {isId ? "Terbaru" : "Latest"}</option>
-                <option value="1.1">v1.1</option>
+                <option value="1.1">v1.1 · {isId ? "Terbaru" : "Latest"}</option>
                 <option value="1.0">v1.0 · {isId ? "Arsip" : "Archive"}</option>
               </select>
             </label>
@@ -288,7 +280,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
         </div>
       </aside>
       <article className="docs-content">
-      {version === "1.0" && <p className="docs-version-banner">{isId ? "Versi 1.0 — flow lama disimpan sebagai arsip." : "Version 1.0 — the previous workflow is preserved as an archive."} <a href="/docs/v1.2">{isId ? "Buka versi 1.2 →" : "Open version 1.2 →"}</a></p>}
+      {version === "1.0" && <p className="docs-version-banner">{isId ? "Versi 1.0 — flow lama disimpan sebagai arsip." : "Version 1.0 — the previous workflow is preserved as an archive."} <a href="/docs/v1.1">{isId ? "Buka versi 1.1 →" : "Open version 1.1 →"}</a></p>}
       <header className="docs-hero">
         <div className="docs-hero-top">
           <p className="docs-eyebrow">
@@ -321,7 +313,6 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
 
 
       {/* ------------------------------------------------------------------ */}
-      {!isV11 ? (
       <section className="docs-section" id="overview" aria-labelledby="h-overview">
         <div className="docs-section-head">
           <BookOpenCheck aria-hidden="true" size={20} strokeWidth={2} />
@@ -390,13 +381,11 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
           </div>
         </div>
       </section>
-      ) : <DocsV11Overview lang={lang} />}
 
       {/* ------------------------------------------------------------------ */}
       <DocsGlossary lang={lang} />
       <DocsRules lang={lang} />
 
-      {!isV11 ? (
       <section className="docs-section" id="end-to-end-flow" aria-labelledby="h-end-to-end-flow">
         <SectionHead
           icon={Workflow}
@@ -433,11 +422,11 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
             <FlowArrow />
             <FlowNode kind="store" lang={lang} title="Leads">
               <p>{isId ? "Simpan detail lead & statusnya." : "Store lead details & pipeline status."}</p>
-              {version === "1.2" && <p>{isId ? "Staf harus segera merespons, paling lambat 1 hari sejak lead diterima, menggunakan template yang disediakan." : "Staff must respond promptly, within 1 day of receiving the lead, using the provided template."}</p>}
+              {version === "1.1" && <p>{isId ? "Staf harus segera merespons, paling lambat 1 hari sejak lead diterima, menggunakan template yang disediakan." : "Staff must respond promptly, within 1 day of receiving the lead, using the provided template."}</p>}
             </FlowNode>
             <FlowArrow />
             <FlowNode kind="decision" lang={lang} title={isId ? "Jenis layanan & progres lead" : "Service Type & Lead Progress"}>
-              {version === "1.2" && <p>{isId ? "AI dapat mengekstrak informasi dan menentukan jenis layanan otomatis, atau staf memilihnya secara manual." : "AI can extract information and identify the service type automatically, or staff can select it manually."}</p>}
+              {version === "1.1" && <p>{isId ? "AI dapat mengekstrak informasi dan menentukan jenis layanan otomatis, atau staf memilihnya secara manual." : "AI can extract information and identify the service type automatically, or staff can select it manually."}</p>}
             </FlowNode>
             <FlowArrow plain />
             <Branches>
@@ -495,7 +484,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
                       ? "Saldo dibawa ke bulan berikutnya."
                       : "Active balance carried over to next month."}
                   </p>
-                  {version === "1.2" && <a href="#work-in-progress">{isId ? "Lihat flow WIP & follow-up →" : "See WIP & follow-up workflow →"}</a>}
+                  {version === "1.1" && <a href="#work-in-progress">{isId ? "Lihat flow WIP & follow-up →" : "See WIP & follow-up workflow →"}</a>}
                 </FlowNode>
               </Branch>
               <Branch label="Rejected">
@@ -510,10 +499,8 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
           </Flow>
         </div>
       </section>
-      ) : <DocsV11LeadFlow lang={lang} />}
 
       {/* ------------------------------------------------------------------ */}
-      {!isV11 ? (
       <section className="docs-section" id="incorporation" aria-labelledby="h-incorporation">
         <SectionHead
           icon={Building2}
@@ -521,7 +508,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
           id="h-incorporation"
         />
         <p>
-          {version === "1.2" ? (isId
+          {version === "1.1" ? (isId
             ? "Kumpulkan informasi minimum, seperti jumlah director dan shareholder, untuk menentukan biaya. Informasi klien dikumpulkan melalui Communication Hub; data formulir lengkap disiapkan untuk pengajuan ACRA."
             : "Collect minimum information, such as director and shareholder headcounts, to determine the fee. Gather client information through Communication Hub and prepare the complete form data for ACRA filing.") : isId
             ? "Mengumpulkan semua data untuk formulir incorporation ke ACRA. Informasi dari klien dikumpulkan lewat Communication Hub; alur percakapan dan tindak lanjut ada pada bagian Comm Hub & E-portal."
@@ -538,14 +525,14 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
             <FlowNode
               lang={lang}
               title={
-                version === "1.2" ? (isId ? "Kumpulkan informasi minimum untuk menentukan biaya" : "Collect Minimum Information to Determine Fees") : isId
+                version === "1.1" ? (isId ? "Kumpulkan informasi minimum untuk menentukan biaya" : "Collect Minimum Information to Determine Fees") : isId
                   ? "Kumpulkan data formulir incorporation ACRA"
                   : "Collect ACRA Incorporation Form Data"
               }
             >
               <ul>
                 <li>
-                  {version === "1.2" ? (isId
+                  {version === "1.1" ? (isId
                     ? "Jumlah director dan shareholder untuk menentukan biaya."
                     : "Director and shareholder headcounts to determine the fee.") : isId
                     ? "Jumlah shareholder & director (menentukan jumlah KYC)"
@@ -564,14 +551,14 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
             >
               <ul>
                 <li>
-                  {version === "1.2" ? (isId
+                  {version === "1.1" ? (isId
                     ? "Biaya jasa + biaya ACRA + biaya KYC/KYB"
                     : "Service fee + ACRA fee + KYC/KYB fee") : isId
                     ? "Biaya jasa + ACRA fee + GST"
                     : "Professional service fee + ACRA fee + GST"}
                 </li>
                 <li>
-                  {version === "1.2" ? (isId
+                  {version === "1.1" ? (isId
                     ? "Klien wajib melunasi pembayaran sebelum filing ke ACRA."
                     : "Client must settle payment before filing with ACRA.") : isId
                     ? "Klien wajib bayar sebelum incorporation dimulai"
@@ -638,7 +625,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
                     </FlowNode>
                   </Branch>
                 </Branches>
-                {version === "1.2" && <>
+                {version === "1.1" && <>
                   <FlowArrow />
                   <FlowNode id="corporate-representative" kind="note" lang={lang} title={isId ? "Wakil perusahaan (individu)" : "Corporate Representative (Individual)"}>
                     <p>{isId ? "Wakil individu dari corporate shareholder mengikuti persyaratan jalur Individual: data pribadi, NRIC/FIN atau passport, serta bukti alamat bila diperlukan. Wakil juga mengikuti KYC/CDD." : "An individual representing a corporate shareholder follows the Individual branch: personal details, NRIC/FIN or passport, and proof of address where applicable. The representative also undergoes KYC/CDD."}</p>
@@ -674,7 +661,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
               </ul>
             </FlowNode>
             <FlowArrow />
-            {version === "1.2" && <>
+            {version === "1.1" && <>
               <FlowNode id="incorporation-signature-bundle" lang={lang} title={isId ? "Bundel dokumen tanda tangan" : "Bundle Documents for Signature"}>
                 <ul>
                   <li>{isId ? "Siapkan dokumen incorporation dan draf First Director Meeting pada tahap yang sesuai." : "Prepare incorporation documents and First Director Meeting drafts at the appropriate stage."}</li>
@@ -693,12 +680,12 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
               id="incorporation-submit"
               lang={lang}
               title={
-                version === "1.2" ? (isId ? "Ajukan aplikasi ke ACRA" : "Submit Application to ACRA") : isId
+                version === "1.1" ? (isId ? "Ajukan aplikasi ke ACRA" : "Submit Application to ACRA") : isId
                   ? "Ajukan aplikasi ke ACRA melalui corpora8e"
                   : "Submit Application to ACRA through corpora8e"
               }
             >
-              {version === "1.2" ? <>
+              {version === "1.1" ? <>
                 <p>{isId ? "Biaya pengajuan wajib dibayar ke ACRA." : "The filing fee must be paid to ACRA."}</p>
                 <div className="docs-filing-note" role="note">
                   <strong>{isId ? "Catatan:" : "Note:"}</strong>
@@ -716,7 +703,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
             <Branches>
               <Branch label={isId ? "Ditolak" : "Rejected"}>
                 <FlowNode lang={lang} title={isId ? "Tinjau alasan penolakan & perbaiki aplikasi" : "Review Rejection Reasons & Correct Application"}>
-                  {version === "1.2" ? (isId ? "ACRA memberikan alasan penolakan. Staf harus segera meninjau dan memperbaiki aplikasi sesuai alasan tersebut, misalnya nama perusahaan tidak tersedia." : "ACRA provides the rejection reasons. Staff must review and correct the application as soon as possible, for example if the proposed company name is unavailable.") : (isId ? "Misalnya nama sudah dipakai perusahaan lain." : "For example, the proposed company name is already in use.")}
+                  {version === "1.1" ? (isId ? "ACRA memberikan alasan penolakan. Staf harus segera meninjau dan memperbaiki aplikasi sesuai alasan tersebut, misalnya nama perusahaan tidak tersedia." : "ACRA provides the rejection reasons. Staff must review and correct the application as soon as possible, for example if the proposed company name is unavailable.") : (isId ? "Misalnya nama sudah dipakai perusahaan lain." : "For example, the proposed company name is already in use.")}
                 </FlowNode>
                 <FlowArrow />
                 <FlowNode id="acra-revision-consent" lang={lang} title={isId ? "Minta persetujuan klien atas perbaikan" : "Obtain Client Approval of the Corrections"}>
@@ -751,9 +738,9 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
               }
             >
               <ul>
-                {version !== "1.2" && <li>First Director meeting</li>}
+                {version !== "1.1" && <li>First Director meeting</li>}
                 <li>
-                  {version === "1.2" ? (isId
+                  {version === "1.1" ? (isId
                     ? "Kirim Business Profile, Constitution & dokumen Director Meeting"
                     : "Transmit Business Profile, Constitution & Director Meeting Documents") : isId
                     ? "Kirim Business Profile & Constitution"
@@ -765,12 +752,12 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
             <FlowNode
               lang={lang}
               title={
-                version === "1.2" ? (isId ? "Kontrak Layanan" : "Service Contract") : isId
+                version === "1.1" ? (isId ? "Kontrak Layanan" : "Service Contract") : isId
                   ? "Klien mengisi form layanan SOAS"
                   : "Client Selects SOAS Service Package"
               }
             >
-              {version === "1.2" && <p>{isId ? "Klien memilih layanan yang dibutuhkan:" : "Let the client choose the required services:"}</p>}
+              {version === "1.1" && <p>{isId ? "Klien memilih layanan yang dibutuhkan:" : "Let the client choose the required services:"}</p>}
               <ul>
                 <li>
                   <strong>Corporate secretarial</strong>{" "}
@@ -826,11 +813,9 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
           </Flow>
         </div>
       </section>
-      ) : <DocsV11Incorporation lang={lang} />}
-      {version === "1.1" && <DocsV11Screening lang={lang} />}
+
 
       {/* ------------------------------------------------------------------ */}
-      {!isV11 ? (
       <section className="docs-section" id="onboarding" aria-labelledby="h-onboarding">
         <SectionHead
           icon={Rocket}
@@ -846,7 +831,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
           <Flow label={isId ? "Flow onboarding" : "Onboarding workflow"}>
             <FlowNode kind="start" lang={lang} title={isId ? "Perusahaan existing mengajukan onboarding" : "Existing Company Requests Onboarding"} />
             <FlowArrow />
-              <FlowNode lang={lang} title={version === "1.2" ? (isId ? "Ambil atau minta Business Profile perusahaan" : "Retrieve or Request Company Business Profile") : (isId ? "Ambil Business Profile perusahaan" : "Retrieve Company Business Profile")} />
+              <FlowNode lang={lang} title={version === "1.1" ? (isId ? "Ambil atau minta Business Profile perusahaan" : "Retrieve or Request Company Business Profile") : (isId ? "Ambil Business Profile perusahaan" : "Retrieve Company Business Profile")} />
             <FlowArrow />
             <DocsReturnLoop
               fromId="onboarding-corrected-documents"
@@ -874,13 +859,13 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
                   </FlowNode>
                 </Branch>
                 <Branch label={isId ? "Disetujui" : "Approved"}>
-                  {version === "1.2" && <>
+                  {version === "1.1" && <>
                     <FlowNode id="onboarding-csp-handover" lang={lang} title={isId ? "Kumpulkan seluruh dokumen dari CSP sebelumnya" : "Get All Documents from Previous CSP"}>
                       {isId ? "Minta dan kumpulkan seluruh dokumen serta catatan perusahaan yang disimpan CSP sebelumnya, dalam bentuk digital maupun fisik." : "Request and collect all company documents and records held by the previous CSP, in digital or physical form."}
                     </FlowNode>
                     <FlowArrow />
                   </>}
-                  <FlowNode lang={lang} title={version === "1.2" ? (isId ? "Kontrak Layanan" : "Service Contract") : (isId ? "Pilih layanan SOAS" : "Select SOAS Services")}>
+                  <FlowNode lang={lang} title={version === "1.1" ? (isId ? "Kontrak Layanan" : "Service Contract") : (isId ? "Pilih layanan SOAS" : "Select SOAS Services")}>
                     {isId ? "Pilih paket atau item Corporate Secretarial / ART. Layanan di luar kontrak ditagih terpisah sebagai ad hoc." : "Select Corporate Secretarial / ART packages or individual items. Out-of-contract services are billed separately as ad hoc."}
                   </FlowNode>
                   <FlowArrow />
@@ -888,7 +873,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
                     {isId ? "Siapkan kontrak sesuai layanan yang dipilih. Pantau kontrak yang belum ditandatangani dan kirim pengingat. Perubahan layanan membutuhkan kontrak baru." : "Prepare the contract for the selected services. Track unsigned contracts and send reminders. Service changes require a new contract."}
                   </FlowNode>
                   <FlowArrow label={isId ? "Kontrak sudah ditandatangani" : "Contract signed"} />
-                  {version === "1.2" && <>
+                  {version === "1.1" && <>
                     <FlowNode id="onboarding-csp-client-list" lang={lang} title={isId ? "Tambahkan perusahaan ke daftar klien CSP SOAS" : "Add Company to SOAS CSP Client List"}>
                       {isId ? "Untuk layanan filing, gunakan Maintain corporate service provider client list → Add client di Bizfile. Masukkan UEN perusahaan sebelum SOAS melakukan filing untuk klien." : "For filing services, use Maintain corporate service provider client list → Add client in Bizfile. Enter the company's UEN before SOAS files on the client's behalf."}
                     </FlowNode>
@@ -910,17 +895,16 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
           </Flow>
         </div>
         <p>{isId ? "Catatan: papan sumber belum merinci tindak lanjut hasil KYC/KYB yang gagal. Jalur koreksi dan penolakan final di atas merupakan usulan penanganan operasional; kriteria keputusan perlu ditetapkan oleh tim SOAS." : "Note: the source board does not detail failed KYC/KYB handling. The correction and final-rejection paths above are proposed operational handling; SOAS must define the decision criteria."}</p>
-        {version === "1.2" && <p>
+        {version === "1.1" && <p>
           {isId ? "Rujukan ACRA untuk tahap Bizfile setelah kontrak: " : "ACRA references for the post-contract Bizfile steps: "}
           <a href="https://www.acra.gov.sg/manage/corporate-service-providers/maintaining-client-lists-corporate-service-providers/" target="_blank" rel="noreferrer">{isId ? "daftar klien CSP & endorsement" : "CSP client list & endorsement"}</a>
           {" · "}
           <a href="https://www.acra.gov.sg/manage/companies/legal-requirements-common-offences/maintaining-local-companys-information-registers/updating-company-information-officers-shareholders/" target="_blank" rel="noreferrer">{isId ? "perubahan data & pejabat perusahaan" : "company particulars & officer changes"}</a>.
         </p>}
       </section>
-      ) : <DocsV11Onboarding lang={lang} />}
-      {version === "1.1" && <DocsV11Contracts lang={lang} />}
-      {version === "1.2" && <DocsWipFlow lang={lang} />}
-      {version === "1.2" && <DocsManagementReport lang={lang} />}
+
+      {version === "1.1" && <DocsWipFlow lang={lang} />}
+      {version === "1.1" && <DocsManagementReport lang={lang} />}
 
       {/* ------------------------------------------------------------------ */}
       <section className="docs-section" id="client-database" aria-labelledby="h-client-database">
@@ -969,7 +953,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
         </h3>
         <div className="docs-canvas">
           <Flow label={isId ? "Status klien" : "Client lifecycle status"}>
-            <FlowNode kind="store" lang={lang} title={version === "1.2" ? "Client Database" : (isId ? "Klien" : "Client Record")} />
+            <FlowNode kind="store" lang={lang} title={version === "1.1" ? "Client Database" : (isId ? "Klien" : "Client Record")} />
             <FlowArrow />
             <FlowNode kind="decision" lang={lang} title={isId ? "Status?" : "Status?"} />
             <FlowArrow plain />
@@ -1066,7 +1050,7 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
             </Branches>
           </Flow>
         </div>
-      {version === "1.1" && <DocsV11RecordModel lang={lang} />}
+
       </section>
 
       {/* ------------------------------------------------------------------ */}
@@ -1256,7 +1240,6 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
       <DocsFyeAlerts lang={lang} />
       <DocsCommunicationFlow lang={lang} />
 
-      {!isV11 ? (
       <section className="docs-section" id="lead-reports" aria-labelledby="h-lead-reports">
         <SectionHead
           icon={FileSignature}
@@ -1306,7 +1289,6 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
           </Flow>
         </div>
       </section>
-      ) : <DocsV11LeadReport lang={lang} />}
 
       {/* ------------------------------------------------------------------ */}
       <DocsMonthlyFlow lang={lang} version={version} />
@@ -1323,7 +1305,6 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
             : "Ambiguous or incomplete items on the original board. Requires confirmation prior to full implementation."}
         </p>
 
-        {version === "1.1" && <DocsV11OpenNotes lang={lang} />}
         <ul className="docs-open-list">
           <li>
             {isId ? (
