@@ -749,7 +749,9 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
               <ul>
                 <li>First Director meeting</li>
                 <li>
-                  {isId
+                  {version === "1.2" ? (isId
+                    ? "Kirim Business Profile, Constitution & dokumen Director Meeting"
+                    : "Transmit Business Profile, Constitution & Director Meeting Documents") : isId
                     ? "Kirim Business Profile & Constitution"
                     : "Transmit Business Profile & Constitution"}
                 </li>
