@@ -10,6 +10,7 @@ export default function DocsManagementReport({ lang }: { lang: DocsLang }) {
         <h2 id="h-monthly-management-report">{isId ? "Monthly Report — Review bulanan manajemen" : "Monthly Report — Management Review"}</h2>
       </div>
       <p>{isId ? "Setiap bulan, rangkum pipeline lead, kepatuhan klien, progres pekerjaan staf dan penagihan agar manajemen tahu hasil yang tercapai, pekerjaan yang tertunda serta tindakan berikutnya. Bandingkan bulan sebelumnya dengan bulan berjalan; WIP yang belum selesai tetap dibawa dengan ID yang sama." : "Each month, summarise the lead pipeline, client compliance, staff work progress and collection so management can see outcomes, pending work and next actions. Compare the previous and current months; carry unfinished WIP forward under the same ID."}</p>
+      <p>{isId ? "Alert deadline kepatuhan dipantau setiap hari, tanpa menunggu laporan bulanan. Laporan ini merangkum alert aktif, kewajiban yang mendekati jatuh tempo, yang terlambat dan tindak lanjutnya." : "Monitor compliance deadline alerts daily, without waiting for the monthly report. This report summarises active alerts, approaching deadlines, overdue obligations and follow-up actions."}</p>
       <div className="docs-canvas">
         <Flow label={isId ? "Flow laporan bulanan dan tindak lanjut manajemen" : "Monthly management reporting and follow-up workflow"}>
           <FlowNode kind="start" lang={lang} title={isId ? "Pilih bulan laporan & periode pembanding" : "Select the Reporting Month & Comparison Period"}>
@@ -40,6 +41,15 @@ export default function DocsManagementReport({ lang }: { lang: DocsLang }) {
                   <li>{isId ? "Notice memakai template segera setelah FYE; reminder mingguan sampai ditindaklanjuti staf." : "Template notices immediately after FYE; weekly reminders until staff take over the follow-up."}</li>
                 </ul>
                 <a href="#fye-alerts">{isId ? "Lihat alert dan aturan deadline berdasarkan FYE →" : "See FYE-based alerts and deadline rules →"}</a>
+              </FlowNode>
+              <FlowArrow />
+              <FlowNode id="monthly-compliance-deadline-alerts" lang={lang} title={isId ? "Pantau deadline & kirim alert kepatuhan" : "Monitor Deadlines & Send Compliance Alerts"}>
+                <ul>
+                  <li>{isId ? "Per kewajiban: tampilkan klien/UEN, FYE/FY/YA terkait, instansi, deadline yang berlaku, sisa hari atau hari terlambat, PIC dan tindakan berikutnya." : "For each obligation, show the client/UEN, relevant FYE/FY/YA, agency, applicable deadline, days remaining or overdue, owner and next action."}</li>
+                  <li>{isId ? "Sebelum jatuh tempo: kirim alert ke PIC sesuai jadwal pengingat SOAS. Pada hari jatuh tempo dan setelah terlambat: tandai prioritas dan eskalasi ke supervisor/manajemen." : "Before the deadline, alert the owner according to the SOAS reminder schedule. On the due date and when overdue, flag priority and escalate to the supervisor/management."}</li>
+                  <li>{isId ? "Jika perlu tindakan klien, kirim template via Comm Hub dan catat pengiriman serta hasil follow-up. Jangan menutup alert deadline hanya karena dokumen sudah lengkap atau staf mengambil alih reminder." : "If client action is needed, send a template through Comm Hub and record delivery and follow-up outcomes. Do not close a deadline alert merely because documents are complete or staff take over reminders."}</li>
+                  <li>{isId ? "Perbarui deadline hanya untuk extension yang sudah disetujui; permohonan yang masih pending tidak mengubah deadline. Tutup alert kewajiban setelah penyelesaian/filing terkonfirmasi atau exemption/waiver yang berlaku tercatat, beserta buktinya." : "Revise deadlines only for approved extensions; a pending application does not change the deadline. Close an obligation's alert after completion/filing is confirmed or an applicable exemption/waiver is recorded, with evidence."}</li>
+                </ul>
               </FlowNode>
             </Branch>
             <Branch label={isId ? "Pekerjaan & collection" : "Work & Collection"}>
