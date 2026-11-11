@@ -8,17 +8,20 @@ export default function DocsReturnLoop({
   fromId,
   toId,
   label,
+  enabled = true,
 }: {
   children: ReactNode;
   fromId: string;
   toId: string;
   label: string;
+  enabled?: boolean;
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const markerId = useId();
   const [path, setPath] = useState("");
 
   useEffect(() => {
+    if (!enabled) return;
     const root = rootRef.current;
     if (!root) return;
     let frame = 0;
@@ -68,7 +71,9 @@ export default function DocsReturnLoop({
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", scheduleUpdate);
     };
-  }, [fromId, toId]);
+  }, [fromId, toId, enabled]);
+
+  if (!enabled) return <>{children}</>;
 
   return (
     <div className="df-return-loop" ref={rootRef}>

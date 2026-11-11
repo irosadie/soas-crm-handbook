@@ -893,6 +893,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             <DocsReturnLoop
               fromId="onboarding-corrected-documents"
               toId="onboarding-screening"
+              enabled={version === "1.0"}
               label={isId ? "Setelah data atau dokumen diperbaiki, kembali ke pemeriksaan KYC/KYB untuk penilaian ulang oleh SOAS." : "After correcting the information or documents, return to KYC/KYB screening for SOAS reassessment."}
             >
               <FlowNode id="onboarding-screening" lang={lang} title={isId ? "Lakukan pemeriksaan KYC/KYB" : "Perform KYC/KYB Screening"} />
@@ -900,7 +901,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
               <FlowNode kind="decision" lang={lang} title={isId ? "Hasil pemeriksaan KYC/KYB oleh SOAS?" : "SOAS KYC/KYB Screening Outcome?"} />
               <FlowArrow plain />
               <Branches>
-                <Branch label={isId ? "Perlu perbaikan" : "Corrections Required"}>
+                {version === "1.0" && <Branch label={isId ? "Perlu perbaikan" : "Corrections Required"}>
                   <FlowNode lang={lang} title={isId ? "Tinjau temuan & minta kelengkapan dari klien" : "Review Findings & Request Missing Information"}>
                     {isId ? "Staf meninjau temuan dan meminta klien memperbaiki data atau melengkapi dokumen yang diperlukan." : "Staff review the findings and ask the client to correct the information or provide the required documents."}
                   </FlowNode>
@@ -909,8 +910,8 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
                     <p>{isId ? "Kembali ke pemeriksaan KYC/KYB setelah data atau dokumen diperbaiki. Hasil pemeriksaan ulang menentukan apakah perlu perbaikan lagi, ditolak, atau disetujui. Onboarding tetap tertunda sampai disetujui SOAS." : "Return to KYC/KYB screening after the information or documents have been corrected. Reassessment determines whether further corrections are needed, the request is rejected, or it is approved. Onboarding remains pending until SOAS approval."}</p>
                     <a href="#onboarding-screening">{isId ? "Kembali ke pemeriksaan KYC/KYB ↑" : "Return to KYC/KYB Screening ↑"}</a>
                   </FlowNode>
-                </Branch>
-                <Branch label={isId ? "Ditolak final" : "Final Rejection"}>
+                </Branch>}
+                <Branch label={version === "1.1" ? (isId ? "Ditolak" : "Rejected") : (isId ? "Ditolak final" : "Final Rejection")}>
                   <FlowNode id="onboarding-rejected" kind="end" lang={lang} title={isId ? "Onboarding ditolak" : "Onboarding Rejected"}>
                     {isId ? "Catat alasan keputusan dan beri tahu klien. Proses berakhir tanpa kontrak layanan atau aktivasi sebagai klien SOAS." : "Record the decision reasons and inform the client. End the process without a service contract or activation as a SOAS client."}
                   </FlowNode>
@@ -951,7 +952,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             </DocsReturnLoop>
           </Flow>
         </div>
-        <p>{isId ? "Catatan: papan sumber belum merinci tindak lanjut hasil KYC/KYB yang gagal. Jalur koreksi dan penolakan final di atas merupakan usulan penanganan operasional; kriteria keputusan perlu ditetapkan oleh tim SOAS." : "Note: the source board does not detail failed KYC/KYB handling. The correction and final-rejection paths above are proposed operational handling; SOAS must define the decision criteria."}</p>
+        {version === "1.0" && <p>{isId ? "Catatan: papan sumber belum merinci tindak lanjut hasil KYC/KYB yang gagal. Jalur koreksi dan penolakan final di atas merupakan usulan penanganan operasional; kriteria keputusan perlu ditetapkan oleh tim SOAS." : "Note: the source board does not detail failed KYC/KYB handling. The correction and final-rejection paths above are proposed operational handling; SOAS must define the decision criteria."}</p>}
         {version === "1.1" && <p>
           {isId ? "Rujukan ACRA untuk tahap Bizfile setelah kontrak: " : "ACRA references for the post-contract Bizfile steps: "}
           <a href="https://www.acra.gov.sg/manage/corporate-service-providers/maintaining-client-lists-corporate-service-providers/" target="_blank" rel="noreferrer">{isId ? "daftar klien CSP & endorsement" : "CSP client list & endorsement"}</a>
