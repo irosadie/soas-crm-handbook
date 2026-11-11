@@ -35,6 +35,7 @@ import DocsGlobalSearch from "@/components/docs-global-search";
 import DocsReturnLoop from "@/components/docs-return-loop";
 import DocsWipFlow from "@/components/docs-wip-flow";
 import DocsManagementReport from "@/components/docs-management-report";
+import DocsAcraUnsuccessful from "@/components/docs-acra-unsuccessful";
 import { DocsGlossary, DocsRules, ReferenceLinks } from "@/components/docs-reference";
 import "@/components/docs.css";
 
@@ -704,7 +705,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             <DocsReturnLoop
               fromId="acra-revision-consent"
               toId="incorporation-submit"
-              label={isId ? "Setelah klien menyetujui perbaikan, kembali ke tahap pengajuan ACRA. Ulangi jika ditolak lagi; lanjutkan hanya setelah ACRA menyetujui." : "After the client approves the corrections, return to ACRA submission. Repeat if rejected again; proceed only after ACRA approval."}
+              label={version === "1.1" ? (isId ? "Kembali ke pengajuan hanya jika ACRA mengizinkan resubmission dan klien menyetujui perbaikan. Rejected mengakhiri proses." : "Return to submission only when ACRA allows resubmission and the client approves the corrections. Rejected ends the process.") : (isId ? "Setelah klien menyetujui perbaikan, kembali ke tahap pengajuan ACRA. Ulangi jika ditolak lagi; lanjutkan hanya setelah ACRA menyetujui." : "After the client approves the corrections, return to ACRA submission. Repeat if rejected again; proceed only after ACRA approval.")}
             >
             <FlowNode
               id="incorporation-submit"
@@ -726,19 +727,21 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             <FlowNode
               kind="decision"
               lang={lang}
-              title={isId ? "Aplikasi disetujui ACRA?" : "Application Approved by ACRA?"}
+              title={version === "1.1" ? (isId ? "Hasil pengajuan ACRA?" : "ACRA Application Outcome?") : (isId ? "Aplikasi disetujui ACRA?" : "Application Approved by ACRA?")}
             />
             <FlowArrow plain />
             <Branches>
-              <Branch label={isId ? "Ditolak" : "Rejected"}>
+              <Branch label={version === "1.1" ? (isId ? "Tidak berhasil (Not Successful)" : "Not Successful") : (isId ? "Ditolak" : "Rejected")}>
+                {version === "1.1" ? <DocsAcraUnsuccessful lang={lang} /> : <>
                 <FlowNode lang={lang} title={isId ? "Tinjau alasan penolakan & perbaiki aplikasi" : "Review Rejection Reasons & Correct Application"}>
-                  {version === "1.1" ? (isId ? "ACRA memberikan alasan penolakan. Staf harus segera meninjau dan memperbaiki aplikasi sesuai alasan tersebut, misalnya nama perusahaan tidak tersedia." : "ACRA provides the rejection reasons. Staff must review and correct the application as soon as possible, for example if the proposed company name is unavailable.") : (isId ? "Misalnya nama sudah dipakai perusahaan lain." : "For example, the proposed company name is already in use.")}
+                  {isId ? "Misalnya nama sudah dipakai perusahaan lain." : "For example, the proposed company name is already in use."}
                 </FlowNode>
                 <FlowArrow />
                 <FlowNode id="acra-revision-consent" lang={lang} title={isId ? "Minta persetujuan klien atas perbaikan" : "Obtain Client Approval of the Corrections"}>
                   <p>{isId ? "Setelah klien menyetujui perbaikan, kembali ke tahap pengajuan aplikasi dan tunggu keputusan ACRA. Jika ditolak lagi, ulangi perbaikan, persetujuan klien, dan pengajuan hingga disetujui ACRA." : "Once the client approves the corrections, return to application submission and await ACRA’s decision. If rejected again, repeat the correction, client approval, and submission steps until ACRA approves the application."}</p>
                   <a href="#incorporation-submit">{isId ? "Kembali ke pengajuan ACRA ↑" : "Return to ACRA Submission ↑"}</a>
                 </FlowNode>
+                </>}
               </Branch>
               <Branch label={isId ? "Disetujui" : "Approved"}>
                 <FlowArrow label={isId ? "Hanya jika disetujui" : "Only when approved"} />
