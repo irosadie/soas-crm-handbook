@@ -894,7 +894,12 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
               enabled={version === "1.0"}
               label={isId ? "Setelah data atau dokumen diperbaiki, kembali ke pemeriksaan KYC/KYB untuk penilaian ulang oleh SOAS." : "After correcting the information or documents, return to KYC/KYB screening for SOAS reassessment."}
             >
-              <FlowNode id="onboarding-screening" lang={lang} title={isId ? "Lakukan pemeriksaan KYC/KYB" : "Perform KYC/KYB Screening"}>
+              <FlowNode id="onboarding-screening" lang={lang} title={version === "1.1" ? "KYC / KYB, Client Due Diligence & Screening" : (isId ? "Lakukan pemeriksaan KYC/KYB" : "Perform KYC/KYB Screening")}>
+                {version === "1.1" && <ul>
+                  <li>{isId ? "Mencakup director (termasuk nominee), shareholder individu, serta wakil dan individu terkait corporate shareholder." : "Covers directors (including nominees), individual shareholders, and representatives and relevant individuals behind corporate shareholders."}</li>
+                  <li>{isId ? "Proses dokumen: Passport, NRIC, FIN" : "Process documents: Passport, NRIC, FIN"}</li>
+                  <li>{isId ? "IPPC (Internal Policies, Procedures and Controls Policy — kebijakan kepatuhan AML/CFT internal CSP/SOAS)" : "IPPC (Internal Policies, Procedures and Controls Policy — internal AML/CFT compliance policy for CSP/SOAS)"}</li>
+                </ul>}
                 {version === "1.1" && <p><strong>{isId ? "Catatan: " : "Note: "}</strong>{isId ? "Proses ini mungkin memerlukan biaya." : "A fee may be required for this process."}</p>}
               </FlowNode>
               <FlowArrow />
