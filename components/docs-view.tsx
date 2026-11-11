@@ -684,7 +684,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             <FlowNode
               lang={lang}
               title={
-                isId
+                version === "1.1" ? "KYC / KYB, Client Due Diligence & Screening" : isId
                   ? "KYC / KYB & Client Due Diligence"
                   : "KYC / KYB & Client Due Diligence"
               }
