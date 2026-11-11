@@ -563,9 +563,9 @@
 }
 
 .dfb-merge::after {
-  right: 16.6667%;
+  right: var(--dfb-merge-inset);
   bottom: 25px;
-  left: 16.6667%;
+  left: var(--dfb-merge-inset);
   height: 2px;
 }
 

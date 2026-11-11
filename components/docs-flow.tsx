@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Children, type CSSProperties, type ReactNode } from "react";
 
 /**
  * Primitif flowchart murni CSS/HTML (tanpa dependency tambahan).
@@ -78,7 +78,8 @@ export function FlowArrow({ label, plain = false }: { label?: string; plain?: bo
 }
 
 export function Branches({ children, mergeToNext = false }: { children: ReactNode; mergeToNext?: boolean }) {
-  return <div className={`dfb${mergeToNext ? " dfb-merge" : ""}`}>{children}</div>;
+  const mergeStyle = mergeToNext ? { "--dfb-merge-inset": `${50 / Math.max(Children.toArray(children).length, 1)}%` } as CSSProperties : undefined;
+  return <div className={`dfb${mergeToNext ? " dfb-merge" : ""}`} style={mergeStyle}>{children}</div>;
 }
 
 export function Branch({ label, children, mergeTail = false }: { label?: string; children: ReactNode; mergeTail?: boolean }) {

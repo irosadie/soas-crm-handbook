@@ -582,16 +582,16 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
               title={isId ? "Tipe shareholder?" : "Shareholder Type?"}
             />
             <FlowArrow plain />
-            <Branches>
-              <Branch label={isId ? "Individual" : "Individual"}>
-                <Branches>
-                  <Branch label={isId ? "Singaporean / resident" : "Singaporean / Resident"}>
+            <Branches mergeToNext>
+              <Branch mergeTail label={isId ? "Individual" : "Individual"}>
+                <Branches mergeToNext>
+                  <Branch mergeTail label={isId ? "Singaporean / resident" : "Singaporean / Resident"}>
                     <FlowNode
                       lang={lang}
                       title={isId ? "Minta NRIC / FIN" : "Request NRIC / FIN"}
                     />
                   </Branch>
-                  <Branch label={isId ? "Foreigner" : "Foreigner"}>
+                  <Branch mergeTail label={isId ? "Foreigner" : "Foreigner"}>
                     <FlowNode
                       lang={lang}
                       title={isId ? "Minta Passport" : "Request Passport"}
@@ -605,9 +605,9 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
                   </Branch>
                 </Branches>
               </Branch>
-              <Branch label={isId ? "Corporate" : "Corporate"}>
-                <Branches>
-                  <Branch label={isId ? "Perusahaan Singapura" : "Singapore Entity"}>
+              <Branch mergeTail label={isId ? "Corporate" : "Corporate"}>
+                <Branches mergeToNext>
+                  <Branch mergeTail label={isId ? "Perusahaan Singapura" : "Singapore Entity"}>
                     <FlowNode
                       lang={lang}
                       title={
@@ -617,7 +617,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
                       }
                     />
                   </Branch>
-                  <Branch label={isId ? "Perusahaan asing" : "Foreign Entity"}>
+                  <Branch mergeTail label={isId ? "Perusahaan asing" : "Foreign Entity"}>
                     <FlowNode
                       lang={lang}
                       title={
