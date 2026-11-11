@@ -634,6 +634,12 @@ export default function DocsView({ version = "1.2" }: { version?: "1.0" | "1.1" 
                     </FlowNode>
                   </Branch>
                 </Branches>
+                {version === "1.2" && <>
+                  <FlowArrow />
+                  <FlowNode id="corporate-representative" kind="note" lang={lang} title={isId ? "Wakil perusahaan (individu)" : "Corporate Representative (Individual)"}>
+                    <p>{isId ? "Wakil individu dari corporate shareholder mengikuti persyaratan jalur Individual: data pribadi, NRIC/FIN atau passport, serta bukti alamat bila diperlukan. Wakil juga mengikuti KYC/CDD." : "An individual representing a corporate shareholder follows the Individual branch: personal details, NRIC/FIN or passport, and proof of address where applicable. The representative also undergoes KYC/CDD."}</p>
+                  </FlowNode>
+                </>}
               </Branch>
             </Branches>
             <FlowArrow />
