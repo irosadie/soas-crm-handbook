@@ -886,7 +886,9 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
           <Flow label={isId ? "Flow onboarding" : "Onboarding workflow"}>
             <FlowNode kind="start" lang={lang} title={isId ? "Perusahaan existing mengajukan onboarding" : "Existing Company Requests Onboarding"} />
             <FlowArrow />
-              <FlowNode lang={lang} title={version === "1.1" ? (isId ? "Ambil atau minta Business Profile perusahaan" : "Retrieve or Request Company Business Profile") : (isId ? "Ambil Business Profile perusahaan" : "Retrieve Company Business Profile")} />
+            <FlowNode lang={lang} title={version === "1.1" ? (isId ? "Ambil atau minta Business Profile perusahaan" : "Retrieve or Request Company Business Profile") : (isId ? "Ambil Business Profile perusahaan" : "Retrieve Company Business Profile")}>
+              {version === "1.1" && <p><strong>{isId ? "Usulan biaya screening: " : "Proposed screening fee: "}</strong>{isId ? "Biaya KYC/KYB dapat dihitung berdasarkan jumlah screening individu dan entitas yang diperlukan. Gunakan Business Profile untuk memperkirakan cakupannya, lalu sepakati tarif dan estimasi biaya dengan klien sebelum screening. Catat jumlah screening aktual untuk penagihan sesuai kesepakatan SOAS." : "KYC/KYB fees may be based on the number of individual and entity screenings required. Use the Business Profile to estimate the scope, then agree rates and estimated fees with the client before screening. Record the actual screening count for billing under the agreed SOAS terms."}</p>}
+            </FlowNode>
             <FlowArrow />
             <DocsReturnLoop
               fromId="onboarding-corrected-documents"
