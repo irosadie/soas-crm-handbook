@@ -408,18 +408,18 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
               title={isId ? "Calon klien menghubungi SOAS" : "Prospect contacts SOAS"}
             />
             <FlowArrow plain />
-            <Branches>
-              <Branch label={isId ? "Langsung menjadi lead" : "Direct to Lead"}>
+            <Branches mergeToNext>
+              <Branch mergeTail label={isId ? "Langsung menjadi lead" : "Direct to Lead"}>
                 <FlowNode kind="external" lang={lang} title="Website (Landing Page)" />
                 <FlowArrow />
                 <FlowNode kind="store" lang={lang} title={isId ? "Buat lead dari formulir website" : "Create Lead from Website Form"} />
               </Branch>
-              <Branch label={isId ? "Langsung menjadi lead" : "Direct to Lead"}>
+              <Branch mergeTail label={isId ? "Langsung menjadi lead" : "Direct to Lead"}>
                 <FlowNode kind="external" lang={lang} title="Referral" />
                 <FlowArrow />
                 <FlowNode kind="store" lang={lang} title={isId ? "Catat referral sebagai lead" : "Record Referral as Lead"} />
               </Branch>
-              <Branch label={isId ? "Melalui Comm Hub" : "Via Comm Hub"}>
+              <Branch mergeTail label={isId ? "Melalui Comm Hub" : "Via Comm Hub"}>
                 <FlowNode kind="external" lang={lang} title={isId ? "Email / WhatsApp" : "Email / WhatsApp"} />
                 <FlowArrow />
                 <FlowNode kind="store" lang={lang} title={isId ? "Tinjau percakapan & konversi menjadi lead" : "Review Conversation & Convert to Lead"}>

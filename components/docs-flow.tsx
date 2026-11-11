@@ -77,15 +77,16 @@ export function FlowArrow({ label, plain = false }: { label?: string; plain?: bo
   );
 }
 
-export function Branches({ children }: { children: ReactNode }) {
-  return <div className="dfb">{children}</div>;
+export function Branches({ children, mergeToNext = false }: { children: ReactNode; mergeToNext?: boolean }) {
+  return <div className={`dfb${mergeToNext ? " dfb-merge" : ""}`}>{children}</div>;
 }
 
-export function Branch({ label, children }: { label?: string; children: ReactNode }) {
+export function Branch({ label, children, mergeTail = false }: { label?: string; children: ReactNode; mergeTail?: boolean }) {
   return (
     <div className="dfb-col">
       {label ? <span className="dfb-label">{label}</span> : null}
       {children}
+      {mergeTail ? <span className="dfb-merge-tail" aria-hidden="true" /> : null}
     </div>
   );
 }
