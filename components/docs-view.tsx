@@ -410,7 +410,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             <FlowArrow plain />
             <Branches>
               <Branch>
-                <FlowNode kind="external" lang={lang} title="Website" />
+                <FlowNode kind="external" lang={lang} title="Website (Landing Page)" />
               </Branch>
               <Branch>
                 <FlowNode kind="external" lang={lang} title="Email" />
