@@ -361,7 +361,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             <p>
               {isId
                 ? "Daftar klien aktif, riwayat Business Profile & kontrak, status active / terminated / strike-off."
-                : "Active client register, Business Profile & contract revision logs, lifecycle statuses (active / terminated / strike-off)."}
+                : "Active client register, Business Profile & contract revision logs, client statuses (active / terminated / strike-off)."}
             </p>
           </div>
           <div className="docs-card">
@@ -1037,10 +1037,10 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
         <h3>
           {isId
             ? "Status klien & proses akhir layanan"
-            : "Client Lifecycle Statuses & Offboarding Flows"}
+            : "Client Statuses & Offboarding Flows"}
         </h3>
         <div className="docs-canvas">
-          <Flow label={isId ? "Status klien" : "Client lifecycle status"}>
+          <Flow label={isId ? "Status klien" : "Client status"}>
             <FlowNode kind="store" lang={lang} title={version === "1.1" ? "Client Database" : (isId ? "Klien" : "Client Record")} />
             <FlowArrow />
             <FlowNode kind="decision" lang={lang} title={isId ? "Status?" : "Status?"} />
