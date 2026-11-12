@@ -441,25 +441,29 @@
 }
 
 #onboarding-rejected,
-#incorporation-rejected {
+#incorporation-rejected,
+#wip-closed {
   border-color: #bd493c;
   background: #fff1ef;
   color: #92372d;
 }
 
-#onboarding-rejected .dfn-body {
+#onboarding-rejected .dfn-body,
+#wip-closed .dfn-body {
   color: #92372d;
 }
 
 #incorporation-rejection-note,
-#lead-monthly-report-note {
+#lead-monthly-report-note,
+#wip-closed-note {
   border-color: #c77728;
   background: #fff3e5;
   color: #85430f;
 }
 
 #incorporation-rejection-note .dfn-body,
-#lead-monthly-report-note .dfn-body {
+#lead-monthly-report-note .dfn-body,
+#wip-closed-note .dfn-body {
   color: inherit;
 }
 
@@ -991,14 +995,17 @@
 .docs-shell[data-theme="dark"] .dfn-end { border-color: #5aa77d; background: #246147; color: #f0fff6; }
 .docs-shell[data-theme="dark"] .dfn-end .dfn-body { color: #d0efdc; }
 .docs-shell[data-theme="dark"] #onboarding-rejected,
-.docs-shell[data-theme="dark"] #incorporation-rejected { border-color: #d88076; background: #492a2b; color: #ffd2cb; }
-.docs-shell[data-theme="dark"] #onboarding-rejected .dfn-body { color: #ffd2cb; }
+.docs-shell[data-theme="dark"] #incorporation-rejected,
+.docs-shell[data-theme="dark"] #wip-closed { border-color: #d88076; background: #492a2b; color: #ffd2cb; }
+.docs-shell[data-theme="dark"] #onboarding-rejected .dfn-body,
+.docs-shell[data-theme="dark"] #wip-closed .dfn-body { color: #ffd2cb; }
 .docs-shell[data-theme="dark"] .dfn-decision { background: #4a3c1b; color: #f5e0a6; }
 .docs-shell[data-theme="dark"] .dfn-store { background: #1c3648; }
 .docs-shell[data-theme="dark"] .dfn-external { border-color: #bc944b; background: #3a3020; }
 .docs-shell[data-theme="dark"] .dfn-note { border-color: #9f914c; background: #37321c; color: #eddfa4; }
 .docs-shell[data-theme="dark"] #incorporation-rejection-note,
-.docs-shell[data-theme="dark"] #lead-monthly-report-note { border-color: #ca873e; background: #402a16; color: #f6d3a3; }
+.docs-shell[data-theme="dark"] #lead-monthly-report-note,
+.docs-shell[data-theme="dark"] #wip-closed-note { border-color: #ca873e; background: #402a16; color: #f6d3a3; }
 .docs-shell[data-theme="dark"] .dfh-step.is-deadline { border-color: #d39163; background: #3c2a20; }
 .docs-shell[data-theme="dark"] .is-deadline .dfh-time { color: #f0b58c; }
 .docs-shell[data-theme="dark"] .df-return-connector { color: #ed988c; }

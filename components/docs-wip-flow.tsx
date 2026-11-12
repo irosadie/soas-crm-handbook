@@ -53,19 +53,21 @@ export default function DocsWipFlow({ lang }: { lang: DocsLang }) {
                 </FlowNode>
               </Branch>
               <Branch label={isId ? "Tidak dilanjutkan (Do Not Proceed)" : "Do Not Proceed (Closed - Lost)"}>
-                <FlowNode id="wip-closed" kind="end" lang={lang} title={isId ? "Tutup lead dengan alasan (keluar dari listing WIP)" : "Close Lead with Reason (Excluded from WIP Listing)"}>
-                  <p>{isId ? "Catat alasan penutupan, tanggal keputusan, dan PIC. Status ini langsung mengeluarkan lead dari listing kerja WIP aktif agar antrean operasional tetap bersih dan tidak mengotori saldo carry-forward. Pilih salah satu kategori:" : "Record the closure reason, decision date, and owner. This status immediately removes the lead from the active WIP working list to keep operational queues clean and prevent carry-forward pollution. Categorize as either:"}</p>
+                <FlowNode id="wip-closed" kind="end" lang={lang} title={isId ? "Tutup lead — Tidak dilanjutkan" : "Close Lead — Do Not Proceed"} />
+                <FlowArrow plain />
+                <FlowNode id="wip-closed-note" kind="note" lang={lang} title={isId ? "Catatan & Alasan Penutupan" : "Closure Reasons & WIP Exclusion"}>
+                  <p>{isId ? "Catat alasan, tanggal keputusan, dan PIC. Status ini langsung mengeluarkan lead dari listing kerja WIP aktif agar antrean operasional tetap bersih dan tidak mengotori saldo carry-forward. Klasifikasi alasan:" : "Record the closure reason, decision date, and owner. This status immediately removes the lead from the active WIP working list to keep operational queues clean and prevent carry-forward pollution. Categorize as either:"}</p>
                   <ul>
                     <li>
                       <strong>{isId ? "1. Hilang Kontak / Unresponsive:" : "1. Lost Contact / Unresponsive:"}</strong>{" "}
-                      {isId ? "Tidak ada respon setelah follow-up berulang melalui Comm Hub melewati batas waktu wajar. Riwayat tersimpan dan lead dapat di-reaktivasi jika prospek kembali menghubungi." : "No response after repeated follow-ups via Comm Hub beyond the reasonable grace period. History is preserved and the lead can be reactivated if the prospect reconnects."}
+                      {isId ? "Tidak ada respon setelah follow-up berulang via Comm Hub melebihi batas waktu wajar. Riwayat tersimpan dan dapat di-reaktivasi jika prospek kembali kontak." : "No response after repeated follow-ups via Comm Hub beyond the reasonable grace period. History is preserved and the lead can be reactivated if the prospect reconnects."}
                     </li>
                     <li>
                       <strong>{isId ? "2. Tidak Tertarik / Batal (Not Interested / Withdrawn):" : "2. Not Interested / Withdrawn:"}</strong>{" "}
-                      {isId ? "Klien secara eksplisit menyatakan batal, tidak tertarik, atau memilih vendor lain. Catat alasan spesifik dan langsung ditutup tanpa jadwal follow-up berkala." : "Prospect explicitly states they will not proceed, cancels the request, or selected another provider. Record specific feedback and close immediately without recurring follow-ups."}
+                      {isId ? "Prospek menyatakan batal atau memilih vendor lain. Catat alasan dan langsung ditutup tanpa jadwal follow-up berkala." : "Prospect explicitly cancels or chooses another provider. Record specific feedback and close immediately without recurring follow-ups."}
                     </li>
                   </ul>
-                  <p>{isId ? "Aturan tampilan: Lead dengan status Do Not Proceed / Closed - Lost tidak ditampilkan lagi di listing WIP operasional. Data tetap tersimpan di riwayat pipeline untuk laporan rekapitulasi dan konversi." : "Display rule: Leads with status Do Not Proceed / Closed - Lost are strictly hidden from the operational WIP listing. Data remains archived in the pipeline history for recap and conversion reporting."}</p>
+                  <p>{isId ? "Aturan tampilan: Lead Do Not Proceed / Closed - Lost tidak ditampilkan di listing WIP operasional, namun tetap tersimpan di riwayat pipeline untuk laporan rekapitulasi." : "Display rule: Leads marked Do Not Proceed / Closed - Lost are hidden from the active WIP listing, but retained in pipeline history for recap reporting."}</p>
                 </FlowNode>
               </Branch>
             </Branches>
