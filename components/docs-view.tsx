@@ -1422,17 +1422,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
               </>
             )}
           </li>
-          <li>
-            {isId ? (
-              <>
-                Istilah <em>“IPPC”</em> mengacu pada <strong>Internal Policies, Procedures and Controls Policy</strong> (kebijakan pengendalian internal kepatuhan AML/CFT untuk CSP/SOAS). Frasa <em>“Who automate controller”</em> masih perlu konfirmasi lebih lanjut.
-              </>
-            ) : (
-              <>
-                The acronym <em>“IPPC”</em> refers to <strong>Internal Policies, Procedures and Controls Policy</strong> (internal AML/CFT compliance policy for CSPs/SOAS). The phrase <em>“Who automate controller”</em> remains open for confirmation.
-              </>
-            )}
-          </li>
+
           <li>
             {isId ? (
               <>
