@@ -52,9 +52,20 @@ export default function DocsWipFlow({ lang }: { lang: DocsLang }) {
                   <a href="#wip-assessment">{isId ? "Kembali ke analisis lead ↑" : "Return to lead assessment ↑"}</a>
                 </FlowNode>
               </Branch>
-              <Branch label={isId ? "Tidak dilanjutkan" : "Do Not Proceed"}>
-                <FlowNode id="wip-closed" kind="end" lang={lang} title={isId ? "Tutup / tolak lead dengan alasan" : "Close / Reject Lead with a Reason"}>
-                  {isId ? "Catat alasan, tanggal keputusan dan PIC; beri tahu calon klien dan simpan riwayat. Tidak adanya balasan saja tidak otomatis berarti rejected." : "Record the reason, decision date and owner; inform the prospect and retain the history. A lack of response alone does not automatically mean rejection."}
+              <Branch label={isId ? "Tidak dilanjutkan (Do Not Proceed)" : "Do Not Proceed (Closed - Lost)"}>
+                <FlowNode id="wip-closed" kind="end" lang={lang} title={isId ? "Tutup lead dengan alasan (keluar dari listing WIP)" : "Close Lead with Reason (Excluded from WIP Listing)"}>
+                  <p>{isId ? "Catat alasan penutupan, tanggal keputusan, dan PIC. Status ini langsung mengeluarkan lead dari listing kerja WIP aktif agar antrean operasional tetap bersih dan tidak mengotori saldo carry-forward. Pilih salah satu kategori:" : "Record the closure reason, decision date, and owner. This status immediately removes the lead from the active WIP working list to keep operational queues clean and prevent carry-forward pollution. Categorize as either:"}</p>
+                  <ul>
+                    <li>
+                      <strong>{isId ? "1. Hilang Kontak / Unresponsive:" : "1. Lost Contact / Unresponsive:"}</strong>{" "}
+                      {isId ? "Tidak ada respon setelah follow-up berulang melalui Comm Hub melewati batas waktu wajar. Riwayat tersimpan dan lead dapat di-reaktivasi jika prospek kembali menghubungi." : "No response after repeated follow-ups via Comm Hub beyond the reasonable grace period. History is preserved and the lead can be reactivated if the prospect reconnects."}
+                    </li>
+                    <li>
+                      <strong>{isId ? "2. Tidak Tertarik / Batal (Not Interested / Withdrawn):" : "2. Not Interested / Withdrawn:"}</strong>{" "}
+                      {isId ? "Klien secara eksplisit menyatakan batal, tidak tertarik, atau memilih vendor lain. Catat alasan spesifik dan langsung ditutup tanpa jadwal follow-up berkala." : "Prospect explicitly states they will not proceed, cancels the request, or selected another provider. Record specific feedback and close immediately without recurring follow-ups."}
+                    </li>
+                  </ul>
+                  <p>{isId ? "Aturan tampilan: Lead dengan status Do Not Proceed / Closed - Lost tidak ditampilkan lagi di listing WIP operasional. Data tetap tersimpan di riwayat pipeline untuk laporan rekapitulasi dan konversi." : "Display rule: Leads with status Do Not Proceed / Closed - Lost are strictly hidden from the operational WIP listing. Data remains archived in the pipeline history for recap and conversion reporting."}</p>
                 </FlowNode>
               </Branch>
             </Branches>
@@ -64,7 +75,7 @@ export default function DocsWipFlow({ lang }: { lang: DocsLang }) {
       <div className="docs-cards">
         <div className="docs-card" id="wip-list-controls">
           <h3>{isId ? "Daftar & filter WIP" : "WIP Listing & Filters"}</h3>
-          <p>{isId ? "Tampilkan hanya lead WIP pada daftar kerja, dengan jumlah hasil. Filter berdasarkan PIC, sumber (website/email/recommendation/others), jenis layanan, tahap, hambatan dan tanggal follow-up agar pekerjaan tertunda cepat ditemukan." : "Show only WIP leads in the working list, with a result count. Filter by owner, source (website/email/recommendation/others), service type, stage, blocker and follow-up date to find pending work quickly."}</p>
+          <p>{isId ? "Tampilkan hanya lead WIP yang masih aktif pada daftar kerja, dengan jumlah hasil. Status Tidak Dilanjutkan (Do Not Proceed / Closed - Lost) otomatis disembunyikan dan tidak ditampilkan di listing WIP lagi agar antrean kerja dan saldo carry-forward tidak terdistorsi. Filter berdasarkan PIC, sumber (website/email/recommendation/others), jenis layanan, tahap, hambatan dan tanggal follow-up agar pekerjaan tertunda cepat ditemukan." : "Display only active WIP leads in the working list, with an accurate result count. Leads marked Do Not Proceed (Closed - Lost) are strictly excluded and no longer displayed in the WIP listing so work queues and carry-forward balances stay accurate. Filter by owner, source (website/email/recommendation/others), service type, stage, blocker and follow-up date to find pending work quickly."}</p>
         </div>
         <div className="docs-card" id="wip-period-reporting">
           <h3>{isId ? "Review mingguan & laporan bulanan" : "Weekly Review & Monthly Reporting"}</h3>
