@@ -1423,17 +1423,7 @@ export default function DocsView({ version = "1.1" }: { version?: "1.0" | "1.1" 
             )}
           </li>
 
-          <li>
-            {isId ? (
-              <>
-                Papan terbaru menandai Client Management Database sebagai <em>“building by Francis, Brian and others”</em>; ini penanggung jawab, bukan bukti fitur sudah selesai.
-              </>
-            ) : (
-              <>
-                The current board labels Client Management Database <em>“building by Francis, Brian and others”</em>; this indicates ownership, not completion.
-              </>
-            )}
-          </li>
+
 
         </ul>
 
